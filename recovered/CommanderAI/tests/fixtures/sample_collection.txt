@@ -1,0 +1,125 @@
+# Sample Commander collection for testing
+# Atraxa-friendly cards (WUBG)
+
+# Commander
+1 Atraxa, Praetors' Voice
+
+# Ramp
+1 Sol Ring
+1 Arcane Signet
+1 Fellwar Stone
+1 Talisman of Progress
+1 Talisman of Dominance
+1 Talisman of Resilience
+1 Bloom Tender
+1 Birds of Paradise
+1 Noble Hierarch
+1 Kodama's Reach
+1 Cultivate
+1 Farseek
+1 Nature's Lore
+1 Three Visits
+1 Rampant Growth
+
+# Card Draw
+1 Rhystic Study
+1 Sylvan Library
+1 Phyrexian Arena
+1 Esper Sentinel
+1 Beast Whisperer
+1 Armorcraft Judge
+1 Toski, Bearer of Secrets
+1 Rishkar's Expertise
+1 Painful Truths
+1 Read the Bones
+1 Night's Whisper
+1 Sign in Blood
+
+# Removal
+1 Swords to Plowshares
+1 Path to Exile
+1 Beast Within
+1 Generous Gift
+1 Anguished Unmaking
+1 Vindicate
+1 Despark
+1 Assassin's Trophy
+1 Abrupt Decay
+1 Mortify
+
+# Board Wipes
+1 Wrath of God
+1 Damnation
+1 Supreme Verdict
+1 Farewell
+1 Toxic Deluge
+1 Cyclonic Rift
+
+# Counters/Proliferate theme
+1 Deepglow Skate
+1 Doubling Season
+1 Vorinclex, Monstrous Raider
+1 Hardened Scales
+1 Branching Evolution
+1 Winding Constrictor
+1 Pir, Imaginative Rascal
+1 Toothy, Imaginary Friend
+1 Evolution Sage
+1 Thrummingbird
+1 Grateful Apparition
+1 Gyre Sage
+1 Rishkar, Peema Renegade
+1 Champion of Lambholt
+1 Kalonian Hydra
+1 Managorger Hydra
+1 Forgotten Ancient
+1 Fathom Mage
+1 Master Biomancer
+1 Ajani, Mentor of Heroes
+1 Tamiyo, Field Researcher
+
+# Utility/Protection
+1 Heroic Intervention
+1 Teferi's Protection
+1 Counterspell
+1 Swan Song
+1 Fierce Guardianship
+1 Eternal Witness
+1 Eladamri's Call
+1 Demonic Tutor
+1 Enlightened Tutor
+1 Vampiric Tutor
+
+# Threats
+1 Elesh Norn, Grand Cenobite
+1 Avenger of Zendikar
+1 Craterhoof Behemoth
+1 The Great Henge
+1 Smothering Tithe
+1 Mirari's Wake
+
+# Lands
+1 Command Tower
+1 Exotic Orchard
+1 City of Brass
+1 Mana Confluence
+1 Breeding Pool
+1 Hallowed Fountain
+1 Watery Grave
+1 Godless Shrine
+1 Temple Garden
+1 Overgrown Tomb
+1 Windswept Heath
+1 Flooded Strand
+1 Polluted Delta
+1 Verdant Catacombs
+1 Marsh Flats
+1 Zagoth Triome
+1 Indatha Triome
+1 Raffine's Tower
+1 Spara's Headquarters
+1 Yavimaya, Cradle of Growth
+1 Urborg, Tomb of Yawgmoth
+1 Gavony Township
+1 Karn's Bastion
+1 Reliquary Tower

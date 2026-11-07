@@ -1,0 +1,9 @@
+/* Options panel: sticky beside the result on desktop, capped to the viewport height. */
+@media (min-width: 62em) {
+  .options {
+    position: sticky;
+    top: 76px;
+    max-height: calc(100dvh - 92px);
+    overflow-y: auto;
+  }
+}

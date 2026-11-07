@@ -1,0 +1,7 @@
+PASS: auto-pick can switch to manual while retaining theme
+PASS: Rebuild ignores unsent edits and reproduces the same deck
+PASS: header switches collection, clears stale commander/result, builds from the new collection
+PASS: saved build link restores its collection and auto-runs
+PASS: repeated Suggest clicks issue separate requests
+PASS: mobile build collapses and reopens options
+PASS: no browser runtime errors

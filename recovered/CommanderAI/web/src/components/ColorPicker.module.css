@@ -1,0 +1,36 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  opacity: 0.45;
+  filter: grayscale(0.7);
+  border: 2px solid transparent;
+  transition:
+    opacity 120ms ease,
+    filter 120ms ease;
+}
+
+.button[data-active] {
+  opacity: 1;
+  filter: none;
+  border-color: var(--mantine-primary-color-filled);
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

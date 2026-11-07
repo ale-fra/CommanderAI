@@ -1,0 +1,10 @@
+{
+  "kind": "local verification data; not the original offline bundle",
+  "catalog_source": "/home/alessandro/.commanderai/oracle_cards.json",
+  "catalog_sha256": "3921c45ab4283cc398fec0c330011c7a2ef8088c660314173e2b7744563b3cf2",
+  "collection_source": "../../data/collezione-fittizia.csv",
+  "collection_sha256": "6f40795cf5cbef66f870aab7d17f168471a3a7554f08fd74c78dd03ec5d6b2fc",
+  "selected_cards": 196,
+  "unresolved_names": [],
+  "original_card_images_recovered": false
+}

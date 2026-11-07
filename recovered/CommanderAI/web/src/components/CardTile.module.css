@@ -1,0 +1,43 @@
+.tile {
+  display: block;
+  width: 100%;
+  border-radius: var(--mantine-radius-md);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: 2px;
+}
+
+.paper {
+  height: 100%;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+@media (hover: hover) {
+  .tile:hover .paper {
+    transform: translateY(-2px);
+    box-shadow: var(--mantine-shadow-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper {
+    transition: none;
+  }
+  .tile:hover .paper {
+    transform: none;
+  }
+}
+
+.imageWrap {
+  position: relative;
+}
+
+.qty {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}

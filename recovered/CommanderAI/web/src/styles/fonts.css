@@ -1,0 +1,13 @@
+/* Offline fonts: Inter (UI text) and the Mana icon font (mana symbols). */
+@import "@fontsource-variable/inter";
+@import "mana-font/css/mana.css";
+
+@font-face {
+  font-family: "Mana";
+  src:
+    url("mana-font/fonts/mana.woff2") format("woff2"),
+    url("mana-font/fonts/mana.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}

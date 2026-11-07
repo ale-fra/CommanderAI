@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <title>CommanderAI</title>
+    <link rel="icon" href="data:," />
+    <script>
+      // Apply the saved (default: dark) color scheme before first paint — no flash.
+      (() => {
+        let scheme = "dark";
+        try {
+          scheme = localStorage.getItem("mantine-color-scheme-value") === "light" ? "light" : "dark";
+        } catch {
+          // storage unavailable: keep the dark default
+        }
+        document.documentElement.setAttribute("data-mantine-color-scheme", scheme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

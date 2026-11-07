@@ -1,0 +1,4687 @@
+{
+  "components": {
+    "schemas": {
+      "AliasOption": {
+        "properties": {
+          "alias": {
+            "title": "Alias",
+            "type": "string"
+          },
+          "target": {
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "alias",
+          "target"
+        ],
+        "title": "AliasOption",
+        "type": "object"
+      },
+      "AutoPickInfo": {
+        "properties": {
+          "commander_auto": {
+            "default": false,
+            "title": "Commander Auto",
+            "type": "boolean"
+          },
+          "partner_auto": {
+            "default": false,
+            "title": "Partner Auto",
+            "type": "boolean"
+          },
+          "support": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Support"
+          },
+          "theme_fit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme Fit"
+          }
+        },
+        "required": [
+          "commander_auto",
+          "support",
+          "theme_fit",
+          "partner_auto"
+        ],
+        "title": "AutoPickInfo",
+        "type": "object"
+      },
+      "BracketReport": {
+        "properties": {
+          "bracket": {
+            "title": "Bracket",
+            "type": "integer"
+          },
+          "excluded_cards": {
+            "items": {
+              "$ref": "#/components/schemas/ExcludedCard"
+            },
+            "title": "Excluded Cards",
+            "type": "array"
+          },
+          "excluded_combos": {
+            "items": {
+              "$ref": "#/components/schemas/ExcludedCombo"
+            },
+            "title": "Excluded Combos",
+            "type": "array"
+          },
+          "mode": {
+            "default": "online",
+            "title": "Mode",
+            "type": "string"
+          },
+          "offline_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Offline Reason"
+          },
+          "prioritized": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Prioritized",
+            "type": "array"
+          },
+          "remaining_candidates": {
+            "default": 0,
+            "title": "Remaining Candidates",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "bracket",
+          "mode",
+          "offline_reason",
+          "excluded_cards",
+          "excluded_combos",
+          "prioritized",
+          "remaining_candidates"
+        ],
+        "title": "BracketReport",
+        "type": "object"
+      },
+      "BudgetReport": {
+        "properties": {
+          "budget": {
+            "title": "Budget",
+            "type": "number"
+          },
+          "commanders_price": {
+            "default": 0.0,
+            "title": "Commanders Price",
+            "type": "number"
+          },
+          "final_price": {
+            "default": 0.0,
+            "title": "Final Price",
+            "type": "number"
+          },
+          "met": {
+            "default": true,
+            "title": "Met",
+            "type": "boolean"
+          },
+          "removed_over_budget": {
+            "default": 0,
+            "title": "Removed Over Budget",
+            "type": "integer"
+          },
+          "swaps": {
+            "default": 0,
+            "title": "Swaps",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "budget",
+          "commanders_price",
+          "removed_over_budget",
+          "swaps",
+          "final_price",
+          "met"
+        ],
+        "title": "BudgetReport",
+        "type": "object"
+      },
+      "BuildParams-Input": {
+        "description": "The parameters of a build, as the UI sends them (and can send them again).",
+        "properties": {
+          "bracket": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bracket"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "collection": {
+            "description": "Collection id (see GET /api/collections)",
+            "title": "Collection",
+            "type": "string"
+          },
+          "colors": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colors"
+          },
+          "commander": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commander"
+          },
+          "lands": {
+            "default": 37,
+            "maximum": 99.0,
+            "minimum": 0.0,
+            "title": "Lands",
+            "type": "integer"
+          },
+          "partner": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Partner"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "variety": {
+            "default": 0.0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Variety",
+            "type": "number"
+          }
+        },
+        "required": [
+          "collection"
+        ],
+        "title": "BuildParams",
+        "type": "object"
+      },
+      "BuildParams-Output": {
+        "description": "The parameters of a build, as the UI sends them (and can send them again).",
+        "properties": {
+          "bracket": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bracket"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "collection": {
+            "description": "Collection id (see GET /api/collections)",
+            "title": "Collection",
+            "type": "string"
+          },
+          "colors": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colors"
+          },
+          "commander": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commander"
+          },
+          "lands": {
+            "default": 37,
+            "maximum": 99.0,
+            "minimum": 0.0,
+            "title": "Lands",
+            "type": "integer"
+          },
+          "partner": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Partner"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "variety": {
+            "default": 0.0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Variety",
+            "type": "number"
+          }
+        },
+        "required": [
+          "collection",
+          "commander",
+          "partner",
+          "theme",
+          "colors",
+          "lands",
+          "variety",
+          "seed",
+          "budget",
+          "bracket"
+        ],
+        "title": "BuildParams",
+        "type": "object"
+      },
+      "BuildReport": {
+        "description": "Everything the builder reported, besides the deck itself.",
+        "properties": {
+          "autopick": {
+            "$ref": "#/components/schemas/AutoPickInfo"
+          },
+          "backfilled": {
+            "default": 0,
+            "title": "Backfilled",
+            "type": "integer"
+          },
+          "bracket": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BracketReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BudgetReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "candidate_count": {
+            "default": 0,
+            "title": "Candidate Count",
+            "type": "integer"
+          },
+          "color_filter": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Filter"
+          },
+          "lands": {
+            "default": 37,
+            "title": "Lands",
+            "type": "integer"
+          },
+          "match": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MatchReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notices": {
+            "items": {
+              "$ref": "#/components/schemas/Notice"
+            },
+            "title": "Notices",
+            "type": "array"
+          },
+          "quota_changes": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/QuotaChange"
+            },
+            "title": "Quota Changes",
+            "type": "object"
+          },
+          "quotas": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Quotas",
+            "type": "object"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "shortfall": {
+            "default": 0,
+            "title": "Shortfall",
+            "type": "integer"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "validation_errors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Validation Errors",
+            "type": "array"
+          },
+          "variety": {
+            "default": 0.0,
+            "title": "Variety",
+            "type": "number"
+          }
+        },
+        "required": [
+          "theme",
+          "color_filter",
+          "variety",
+          "seed",
+          "lands",
+          "quotas",
+          "quota_changes",
+          "autopick",
+          "match",
+          "candidate_count",
+          "budget",
+          "bracket",
+          "backfilled",
+          "shortfall",
+          "validation_errors",
+          "notices"
+        ],
+        "title": "BuildReport",
+        "type": "object"
+      },
+      "BuildResponse": {
+        "properties": {
+          "build_id": {
+            "title": "Build Id",
+            "type": "string"
+          },
+          "expires_at": {
+            "title": "Expires At",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/BuildResultDTO"
+          }
+        },
+        "required": [
+          "build_id",
+          "expires_at",
+          "result"
+        ],
+        "title": "BuildResponse",
+        "type": "object"
+      },
+      "BuildResultDTO": {
+        "properties": {
+          "deck": {
+            "$ref": "#/components/schemas/DeckView"
+          },
+          "params": {
+            "$ref": "#/components/schemas/BuildParams-Output"
+          },
+          "report": {
+            "$ref": "#/components/schemas/BuildReport"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/DeckStats"
+          },
+          "tokens": {
+            "items": {
+              "$ref": "#/components/schemas/Token"
+            },
+            "title": "Tokens",
+            "type": "array"
+          }
+        },
+        "required": [
+          "params",
+          "deck",
+          "stats",
+          "tokens",
+          "report"
+        ],
+        "title": "BuildResultDTO",
+        "type": "object"
+      },
+      "CardDetail": {
+        "properties": {
+          "cmc": {
+            "title": "Cmc",
+            "type": "number"
+          },
+          "collector_number": {
+            "default": "",
+            "title": "Collector Number",
+            "type": "string"
+          },
+          "color_identity": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Color Identity",
+            "type": "array"
+          },
+          "colors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Colors",
+            "type": "array"
+          },
+          "edhrec_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edhrec Rank"
+          },
+          "faces": {
+            "items": {
+              "$ref": "#/components/schemas/CardFace"
+            },
+            "title": "Faces",
+            "type": "array"
+          },
+          "game_changer": {
+            "default": false,
+            "title": "Game Changer",
+            "type": "boolean"
+          },
+          "images": {
+            "$ref": "#/components/schemas/CardImages"
+          },
+          "is_commander": {
+            "title": "Is Commander",
+            "type": "boolean"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Keywords",
+            "type": "array"
+          },
+          "mana_cost": {
+            "title": "Mana Cost",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "oracle_text": {
+            "title": "Oracle Text",
+            "type": "string"
+          },
+          "partner_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Partner Tags",
+            "type": "array"
+          },
+          "power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power"
+          },
+          "price_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Usd"
+          },
+          "prices": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Prices",
+            "type": "object"
+          },
+          "rarity": {
+            "default": "",
+            "title": "Rarity",
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/DeckSlot"
+          },
+          "set_code": {
+            "default": "",
+            "title": "Set Code",
+            "type": "string"
+          },
+          "set_name": {
+            "default": "",
+            "title": "Set Name",
+            "type": "string"
+          },
+          "toughness": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Toughness"
+          },
+          "type_line": {
+            "title": "Type Line",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "mana_cost",
+          "cmc",
+          "type_line",
+          "oracle_text",
+          "colors",
+          "color_identity",
+          "keywords",
+          "power",
+          "toughness",
+          "rarity",
+          "edhrec_rank",
+          "price_usd",
+          "game_changer",
+          "role",
+          "is_commander",
+          "partner_tags",
+          "images",
+          "set_code",
+          "set_name",
+          "collector_number",
+          "prices",
+          "faces"
+        ],
+        "title": "CardDetail",
+        "type": "object"
+      },
+      "CardFace": {
+        "properties": {
+          "mana_cost": {
+            "default": "",
+            "title": "Mana Cost",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "oracle_text": {
+            "default": "",
+            "title": "Oracle Text",
+            "type": "string"
+          },
+          "power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power"
+          },
+          "toughness": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Toughness"
+          },
+          "type_line": {
+            "default": "",
+            "title": "Type Line",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "mana_cost",
+          "type_line",
+          "oracle_text",
+          "power",
+          "toughness"
+        ],
+        "title": "CardFace",
+        "type": "object"
+      },
+      "CardImages": {
+        "properties": {
+          "back": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Back"
+          },
+          "front": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Front"
+          }
+        },
+        "required": [
+          "front",
+          "back"
+        ],
+        "title": "CardImages",
+        "type": "object"
+      },
+      "CardSummary": {
+        "properties": {
+          "cmc": {
+            "title": "Cmc",
+            "type": "number"
+          },
+          "color_identity": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Color Identity",
+            "type": "array"
+          },
+          "colors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Colors",
+            "type": "array"
+          },
+          "edhrec_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edhrec Rank"
+          },
+          "game_changer": {
+            "default": false,
+            "title": "Game Changer",
+            "type": "boolean"
+          },
+          "images": {
+            "$ref": "#/components/schemas/CardImages"
+          },
+          "is_commander": {
+            "title": "Is Commander",
+            "type": "boolean"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Keywords",
+            "type": "array"
+          },
+          "mana_cost": {
+            "title": "Mana Cost",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "oracle_text": {
+            "title": "Oracle Text",
+            "type": "string"
+          },
+          "partner_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Partner Tags",
+            "type": "array"
+          },
+          "power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power"
+          },
+          "price_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Usd"
+          },
+          "rarity": {
+            "default": "",
+            "title": "Rarity",
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/DeckSlot"
+          },
+          "toughness": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Toughness"
+          },
+          "type_line": {
+            "title": "Type Line",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "mana_cost",
+          "cmc",
+          "type_line",
+          "oracle_text",
+          "colors",
+          "color_identity",
+          "keywords",
+          "power",
+          "toughness",
+          "rarity",
+          "edhrec_rank",
+          "price_usd",
+          "game_changer",
+          "role",
+          "is_commander",
+          "partner_tags",
+          "images"
+        ],
+        "title": "CardSummary",
+        "type": "object"
+      },
+      "CatalogStatus": {
+        "properties": {
+          "cards": {
+            "title": "Cards",
+            "type": "integer"
+          },
+          "snapshot": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot"
+          }
+        },
+        "required": [
+          "cards",
+          "snapshot"
+        ],
+        "title": "CatalogStatus",
+        "type": "object"
+      },
+      "CollectionCard": {
+        "properties": {
+          "cmc": {
+            "title": "Cmc",
+            "type": "number"
+          },
+          "color_identity": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Color Identity",
+            "type": "array"
+          },
+          "colors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Colors",
+            "type": "array"
+          },
+          "edhrec_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edhrec Rank"
+          },
+          "game_changer": {
+            "default": false,
+            "title": "Game Changer",
+            "type": "boolean"
+          },
+          "images": {
+            "$ref": "#/components/schemas/CardImages"
+          },
+          "is_commander": {
+            "title": "Is Commander",
+            "type": "boolean"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Keywords",
+            "type": "array"
+          },
+          "mana_cost": {
+            "title": "Mana Cost",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "oracle_text": {
+            "title": "Oracle Text",
+            "type": "string"
+          },
+          "partner_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Partner Tags",
+            "type": "array"
+          },
+          "power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power"
+          },
+          "price_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Usd"
+          },
+          "quantity": {
+            "title": "Quantity",
+            "type": "integer"
+          },
+          "rarity": {
+            "default": "",
+            "title": "Rarity",
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/DeckSlot"
+          },
+          "toughness": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Toughness"
+          },
+          "type_line": {
+            "title": "Type Line",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "mana_cost",
+          "cmc",
+          "type_line",
+          "oracle_text",
+          "colors",
+          "color_identity",
+          "keywords",
+          "power",
+          "toughness",
+          "rarity",
+          "edhrec_rank",
+          "price_usd",
+          "game_changer",
+          "role",
+          "is_commander",
+          "partner_tags",
+          "images",
+          "quantity"
+        ],
+        "title": "CollectionCard",
+        "type": "object"
+      },
+      "CollectionCreate": {
+        "properties": {
+          "content": {
+            "description": "Collection text or CSV export",
+            "maxLength": 2000000,
+            "title": "Content",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "name"
+        ],
+        "title": "CollectionCreate",
+        "type": "object"
+      },
+      "CollectionDetail": {
+        "properties": {
+          "commanders": {
+            "title": "Commanders",
+            "type": "integer"
+          },
+          "copies": {
+            "title": "Copies",
+            "type": "integer"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "editable": {
+            "default": false,
+            "title": "Editable",
+            "type": "boolean"
+          },
+          "entries": {
+            "title": "Entries",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "builtin",
+              "default",
+              "stored"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "match": {
+            "$ref": "#/components/schemas/MatchReport"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "unique_cards": {
+            "title": "Unique Cards",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "name",
+          "description",
+          "entries",
+          "copies",
+          "editable",
+          "unique_cards",
+          "commanders",
+          "match"
+        ],
+        "title": "CollectionDetail",
+        "type": "object"
+      },
+      "CollectionInfo": {
+        "properties": {
+          "copies": {
+            "title": "Copies",
+            "type": "integer"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "editable": {
+            "default": false,
+            "title": "Editable",
+            "type": "boolean"
+          },
+          "entries": {
+            "title": "Entries",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "builtin",
+              "default",
+              "stored"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "name",
+          "description",
+          "entries",
+          "copies",
+          "editable"
+        ],
+        "title": "CollectionInfo",
+        "type": "object"
+      },
+      "CollectionPreview": {
+        "properties": {
+          "commanders": {
+            "title": "Commanders",
+            "type": "integer"
+          },
+          "copies": {
+            "title": "Copies",
+            "type": "integer"
+          },
+          "entries": {
+            "title": "Entries",
+            "type": "integer"
+          },
+          "match": {
+            "$ref": "#/components/schemas/MatchReport"
+          },
+          "unique_cards": {
+            "title": "Unique Cards",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "entries",
+          "copies",
+          "unique_cards",
+          "commanders",
+          "match"
+        ],
+        "title": "CollectionPreview",
+        "type": "object"
+      },
+      "CollectionUpdate": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "maxLength": 2000000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "title": "CollectionUpdate",
+        "type": "object"
+      },
+      "ColorGroup": {
+        "properties": {
+          "colors": {
+            "items": {
+              "$ref": "#/components/schemas/ColorOption"
+            },
+            "title": "Colors",
+            "type": "array"
+          },
+          "group": {
+            "title": "Group",
+            "type": "string"
+          }
+        },
+        "required": [
+          "group",
+          "colors"
+        ],
+        "title": "ColorGroup",
+        "type": "object"
+      },
+      "ColorOption": {
+        "properties": {
+          "letters": {
+            "title": "Letters",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "letters"
+        ],
+        "title": "ColorOption",
+        "type": "object"
+      },
+      "CommanderEntry": {
+        "properties": {
+          "can_take_partner": {
+            "default": false,
+            "title": "Can Take Partner",
+            "type": "boolean"
+          },
+          "card": {
+            "$ref": "#/components/schemas/CardSummary"
+          },
+          "colors": {
+            "title": "Colors",
+            "type": "string"
+          },
+          "edhrec_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edhrec Rank"
+          },
+          "partner_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Partner Tags",
+            "type": "array"
+          },
+          "support": {
+            "title": "Support",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "card",
+          "colors",
+          "edhrec_rank",
+          "partner_tags",
+          "can_take_partner",
+          "support"
+        ],
+        "title": "CommanderEntry",
+        "type": "object"
+      },
+      "CommanderSuggestionDTO": {
+        "properties": {
+          "commander": {
+            "$ref": "#/components/schemas/CommanderEntry"
+          },
+          "edhrec_rank": {
+            "title": "Edhrec Rank",
+            "type": "integer"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number"
+          },
+          "support": {
+            "title": "Support",
+            "type": "integer"
+          },
+          "theme_fit": {
+            "default": 0,
+            "title": "Theme Fit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "commander",
+          "support",
+          "edhrec_rank",
+          "theme_fit",
+          "score"
+        ],
+        "title": "CommanderSuggestionDTO",
+        "type": "object"
+      },
+      "CommanderSuggestions": {
+        "properties": {
+          "colors": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colors"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "suggestions": {
+            "items": {
+              "$ref": "#/components/schemas/CommanderSuggestionDTO"
+            },
+            "title": "Suggestions",
+            "type": "array"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "top": {
+            "title": "Top",
+            "type": "integer"
+          },
+          "variety": {
+            "default": 0.0,
+            "title": "Variety",
+            "type": "number"
+          }
+        },
+        "required": [
+          "top",
+          "theme",
+          "colors",
+          "variety",
+          "seed",
+          "suggestions"
+        ],
+        "title": "CommanderSuggestions",
+        "type": "object"
+      },
+      "ContentRequest": {
+        "properties": {
+          "content": {
+            "description": "Collection text or CSV export",
+            "maxLength": 2000000,
+            "title": "Content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "title": "ContentRequest",
+        "type": "object"
+      },
+      "DatabaseStatus": {
+        "properties": {
+          "collections": {
+            "title": "Collections",
+            "type": "integer"
+          },
+          "decks": {
+            "title": "Decks",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "decks",
+          "collections"
+        ],
+        "title": "DatabaseStatus",
+        "type": "object"
+      },
+      "DeckCard": {
+        "properties": {
+          "card": {
+            "$ref": "#/components/schemas/CardSummary"
+          },
+          "reason": {
+            "default": "",
+            "title": "Reason",
+            "type": "string"
+          },
+          "slot": {
+            "$ref": "#/components/schemas/DeckSlot"
+          }
+        },
+        "required": [
+          "card",
+          "slot",
+          "reason"
+        ],
+        "title": "DeckCard",
+        "type": "object"
+      },
+      "DeckDetail": {
+        "properties": {
+          "collection_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collection Source"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "deck": {
+            "$ref": "#/components/schemas/DeckView"
+          },
+          "export_format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Export Format"
+          },
+          "export_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Export Path"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "params": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildParams-Output"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/DeckStats"
+          },
+          "tokens": {
+            "items": {
+              "$ref": "#/components/schemas/Token"
+            },
+            "title": "Tokens",
+            "type": "array"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          },
+          "validation_errors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Validation Errors",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "source",
+          "created_at",
+          "updated_at",
+          "notes",
+          "collection_source",
+          "export_path",
+          "export_format",
+          "deck",
+          "stats",
+          "tokens",
+          "validation_errors",
+          "report",
+          "params"
+        ],
+        "title": "DeckDetail",
+        "type": "object"
+      },
+      "DeckImportRequest": {
+        "properties": {
+          "content": {
+            "description": "Collection text or CSV export",
+            "maxLength": 2000000,
+            "title": "Content",
+            "type": "string"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "title": "DeckImportRequest",
+        "type": "object"
+      },
+      "DeckImportResponse": {
+        "properties": {
+          "deck": {
+            "$ref": "#/components/schemas/DeckDetail"
+          },
+          "unknown_cards": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unknown Cards",
+            "type": "array"
+          }
+        },
+        "required": [
+          "deck",
+          "unknown_cards"
+        ],
+        "title": "DeckImportResponse",
+        "type": "object"
+      },
+      "DeckList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DeckSummaryDTO"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total",
+          "items"
+        ],
+        "title": "DeckList",
+        "type": "object"
+      },
+      "DeckSlot": {
+        "enum": [
+          "LAND",
+          "RAMP",
+          "DRAW",
+          "REMOVAL",
+          "WIPE",
+          "THREAT",
+          "UTILITY"
+        ],
+        "title": "DeckSlot",
+        "type": "string"
+      },
+      "DeckStats": {
+        "properties": {
+          "avg_cmc": {
+            "title": "Avg Cmc",
+            "type": "number"
+          },
+          "card_count": {
+            "title": "Card Count",
+            "type": "integer"
+          },
+          "color_pips": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Color Pips",
+            "type": "object"
+          },
+          "lands": {
+            "title": "Lands",
+            "type": "integer"
+          },
+          "mana_curve": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Mana Curve",
+            "type": "object"
+          },
+          "role_targets": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Role Targets",
+            "type": "object"
+          },
+          "roles": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Roles",
+            "type": "object"
+          },
+          "total_price": {
+            "title": "Total Price",
+            "type": "number"
+          },
+          "types": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Types",
+            "type": "object"
+          },
+          "unpriced_cards": {
+            "title": "Unpriced Cards",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "card_count",
+          "total_price",
+          "unpriced_cards",
+          "avg_cmc",
+          "lands",
+          "mana_curve",
+          "color_pips",
+          "roles",
+          "role_targets",
+          "types"
+        ],
+        "title": "DeckStats",
+        "type": "object"
+      },
+      "DeckSummaryDTO": {
+        "properties": {
+          "avg_cmc": {
+            "title": "Avg Cmc",
+            "type": "number"
+          },
+          "bracket": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bracket"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "card_count": {
+            "title": "Card Count",
+            "type": "integer"
+          },
+          "collection_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collection Source"
+          },
+          "colors": {
+            "title": "Colors",
+            "type": "string"
+          },
+          "commander": {
+            "title": "Commander",
+            "type": "string"
+          },
+          "commander_image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commander Image"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "export_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Export Path"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "partner": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Partner"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "total_price": {
+            "title": "Total Price",
+            "type": "number"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          },
+          "variety": {
+            "default": 0.0,
+            "title": "Variety",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "commander",
+          "partner",
+          "colors",
+          "theme",
+          "seed",
+          "variety",
+          "bracket",
+          "budget",
+          "card_count",
+          "total_price",
+          "avg_cmc",
+          "source",
+          "collection_source",
+          "export_path",
+          "created_at",
+          "updated_at",
+          "commander_image"
+        ],
+        "title": "DeckSummaryDTO",
+        "type": "object"
+      },
+      "DeckUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "maxLength": 10000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "title": "DeckUpdate",
+        "type": "object"
+      },
+      "DeckView": {
+        "properties": {
+          "cards": {
+            "items": {
+              "$ref": "#/components/schemas/DeckCard"
+            },
+            "title": "Cards",
+            "type": "array"
+          },
+          "commander": {
+            "$ref": "#/components/schemas/CardSummary"
+          },
+          "partner": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CardSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "commander",
+          "partner",
+          "cards"
+        ],
+        "title": "DeckView",
+        "type": "object"
+      },
+      "ErrorBody": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "data": {
+            "additionalProperties": true,
+            "title": "Data",
+            "type": "object"
+          },
+          "details": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Details",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "details",
+          "data"
+        ],
+        "title": "ErrorBody",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorBody"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "ExcludedCard": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "reason"
+        ],
+        "title": "ExcludedCard",
+        "type": "object"
+      },
+      "ExcludedCombo": {
+        "properties": {
+          "cards": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cards",
+            "type": "array"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "cards",
+          "reason"
+        ],
+        "title": "ExcludedCombo",
+        "type": "object"
+      },
+      "FuzzyMatch": {
+        "properties": {
+          "corrected": {
+            "title": "Corrected",
+            "type": "string"
+          },
+          "original": {
+            "title": "Original",
+            "type": "string"
+          }
+        },
+        "required": [
+          "original",
+          "corrected"
+        ],
+        "title": "FuzzyMatch",
+        "type": "object"
+      },
+      "Level": {
+        "enum": [
+          "info",
+          "detail",
+          "success",
+          "warning",
+          "error"
+        ],
+        "title": "Level",
+        "type": "string"
+      },
+      "MatchReport": {
+        "description": "Serializable summary of how a collection/decklist matched the catalog.",
+        "properties": {
+          "copies": {
+            "default": 0,
+            "title": "Copies",
+            "type": "integer"
+          },
+          "entries": {
+            "default": 0,
+            "title": "Entries",
+            "type": "integer"
+          },
+          "fuzzy": {
+            "items": {
+              "$ref": "#/components/schemas/FuzzyMatch"
+            },
+            "title": "Fuzzy",
+            "type": "array"
+          },
+          "matched": {
+            "default": 0,
+            "title": "Matched",
+            "type": "integer"
+          },
+          "matched_copies": {
+            "default": 0,
+            "title": "Matched Copies",
+            "type": "integer"
+          },
+          "skipped": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Skipped",
+            "type": "array"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "unique_cards": {
+            "default": 0,
+            "title": "Unique Cards",
+            "type": "integer"
+          },
+          "unmatched": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unmatched",
+            "type": "array"
+          }
+        },
+        "required": [
+          "source",
+          "entries",
+          "copies",
+          "matched",
+          "matched_copies",
+          "unique_cards",
+          "fuzzy",
+          "unmatched",
+          "skipped"
+        ],
+        "title": "MatchReport",
+        "type": "object"
+      },
+      "MigrationStatus": {
+        "properties": {
+          "failed": {
+            "default": 0,
+            "title": "Failed",
+            "type": "integer"
+          },
+          "imported": {
+            "default": 0,
+            "title": "Imported",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "imported",
+          "failed"
+        ],
+        "title": "MigrationStatus",
+        "type": "object"
+      },
+      "Notice": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "data": {
+            "additionalProperties": true,
+            "title": "Data",
+            "type": "object"
+          },
+          "level": {
+            "$ref": "#/components/schemas/Level"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "level",
+          "code",
+          "message",
+          "data"
+        ],
+        "title": "Notice",
+        "type": "object"
+      },
+      "QuotaChange": {
+        "description": "How a theme changed a role's target number of cards.",
+        "properties": {
+          "after": {
+            "title": "After",
+            "type": "integer"
+          },
+          "before": {
+            "title": "Before",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "before",
+          "after"
+        ],
+        "title": "QuotaChange",
+        "type": "object"
+      },
+      "SaveBuildRequest": {
+        "properties": {
+          "build_id": {
+            "title": "Build Id",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "build_id"
+        ],
+        "title": "SaveBuildRequest",
+        "type": "object"
+      },
+      "StatusResponse": {
+        "properties": {
+          "catalog": {
+            "$ref": "#/components/schemas/CatalogStatus"
+          },
+          "database": {
+            "$ref": "#/components/schemas/DatabaseStatus"
+          },
+          "default_collection": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Collection"
+          },
+          "migration": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MigrationStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "offline": {
+            "title": "Offline",
+            "type": "boolean"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "version",
+          "offline",
+          "catalog",
+          "database",
+          "default_collection",
+          "migration"
+        ],
+        "title": "StatusResponse",
+        "type": "object"
+      },
+      "ThemeOption": {
+        "properties": {
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "quota_deltas": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Quota Deltas",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "kind",
+          "quota_deltas"
+        ],
+        "title": "ThemeOption",
+        "type": "object"
+      },
+      "Token": {
+        "properties": {
+          "colors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Colors",
+            "type": "array"
+          },
+          "created_by": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Created By",
+            "type": "array"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Keywords",
+            "type": "array"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power"
+          },
+          "toughness": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Toughness"
+          },
+          "types": {
+            "default": "",
+            "title": "Types",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "power",
+          "toughness",
+          "colors",
+          "types",
+          "keywords",
+          "created_by"
+        ],
+        "title": "Token",
+        "type": "object"
+      },
+      "Vocabulary": {
+        "properties": {
+          "aliases": {
+            "items": {
+              "$ref": "#/components/schemas/AliasOption"
+            },
+            "title": "Aliases",
+            "type": "array"
+          },
+          "archetypes": {
+            "items": {
+              "$ref": "#/components/schemas/ThemeOption"
+            },
+            "title": "Archetypes",
+            "type": "array"
+          },
+          "brackets": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Brackets",
+            "type": "object"
+          },
+          "colors": {
+            "items": {
+              "$ref": "#/components/schemas/ColorGroup"
+            },
+            "title": "Colors",
+            "type": "array"
+          },
+          "formats": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Formats",
+            "type": "object"
+          },
+          "tribes": {
+            "items": {
+              "$ref": "#/components/schemas/ThemeOption"
+            },
+            "title": "Tribes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "colors",
+          "archetypes",
+          "tribes",
+          "aliases",
+          "formats",
+          "brackets"
+        ],
+        "title": "Vocabulary",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Build Commander decks from the cards you own. See docs/UI_PLAN.md.",
+    "title": "CommanderAI",
+    "version": "0.7.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/builds": {
+      "post": {
+        "description": "Build a deck preview (not saved). Save it with ``POST /api/decks``.\n\nThe response echoes the parameters with the seed actually used, so sending\nthem again reproduces the same deck.",
+        "operationId": "builds_build",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildParams-Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Build",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/card": {
+      "get": {
+        "operationId": "cards_card",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Card",
+        "tags": [
+          "cards"
+        ]
+      }
+    },
+    "/api/collections": {
+      "get": {
+        "operationId": "collections_list_all",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionInfo"
+                  },
+                  "title": "Response Collections List All",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "List All",
+        "tags": [
+          "collections"
+        ]
+      },
+      "post": {
+        "operationId": "collections_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Create",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/api/collections/preview": {
+      "post": {
+        "description": "Parse and match a collection without saving it (upload dialog).",
+        "operationId": "collections_preview",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionPreview"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Preview",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/api/collections/{collection_id}": {
+      "delete": {
+        "operationId": "collections_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Delete",
+        "tags": [
+          "collections"
+        ]
+      },
+      "get": {
+        "operationId": "collections_get_one",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get One",
+        "tags": [
+          "collections"
+        ]
+      },
+      "patch": {
+        "operationId": "collections_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Update",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/api/collections/{collection_id}/cards": {
+      "get": {
+        "description": "Every owned card with its quantity (the UI filters and sorts client-side).",
+        "operationId": "collections_cards",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionCard"
+                  },
+                  "title": "Response Collections Cards",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Cards",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/api/commanders": {
+      "get": {
+        "description": "Every legal commander in the collection (sorted by EDHREC rank).",
+        "operationId": "commanders_commanders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "collection",
+            "required": true,
+            "schema": {
+              "title": "Collection",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "colors",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Colors"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CommanderEntry"
+                  },
+                  "title": "Response Commanders Commanders",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Commanders",
+        "tags": [
+          "commanders"
+        ]
+      }
+    },
+    "/api/commanders/partners": {
+      "get": {
+        "description": "Owned cards that can legally share the command zone with ``commander``.",
+        "operationId": "commanders_partners",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "collection",
+            "required": true,
+            "schema": {
+              "title": "Collection",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "commander",
+            "required": true,
+            "schema": {
+              "title": "Commander",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CardSummary"
+                  },
+                  "title": "Response Commanders Partners",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Partners",
+        "tags": [
+          "commanders"
+        ]
+      }
+    },
+    "/api/commanders/suggestions": {
+      "get": {
+        "description": "Owned commanders ranked by supporting cards, theme fit and EDHREC rank.",
+        "operationId": "commanders_suggestions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "collection",
+            "required": true,
+            "schema": {
+              "title": "Collection",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "theme",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Theme"
+            }
+          },
+          {
+            "in": "query",
+            "name": "colors",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Colors"
+            }
+          },
+          {
+            "in": "query",
+            "name": "top",
+            "required": false,
+            "schema": {
+              "default": 5,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Top",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "variety",
+            "required": false,
+            "schema": {
+              "default": 0.0,
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "title": "Variety",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "seed",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Seed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommanderSuggestions"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Suggestions",
+        "tags": [
+          "commanders"
+        ]
+      }
+    },
+    "/api/decks": {
+      "get": {
+        "operationId": "decks_list_all",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "commander",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Commander"
+            }
+          },
+          {
+            "in": "query",
+            "name": "source",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          },
+          {
+            "description": "Search in deck name and commander names",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Search in deck name and commander names",
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "List All",
+        "tags": [
+          "decks"
+        ]
+      },
+      "post": {
+        "description": "Save a build preview (from ``POST /api/builds``) to the deck library.",
+        "operationId": "decks_save",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Save",
+        "tags": [
+          "decks"
+        ]
+      }
+    },
+    "/api/decks/import": {
+      "post": {
+        "description": "Import a deck: a CommanderAI JSON export, or any text decklist.",
+        "operationId": "decks_import_",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeckImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckImportResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Import ",
+        "tags": [
+          "decks"
+        ]
+      }
+    },
+    "/api/decks/{deck_id}": {
+      "delete": {
+        "operationId": "decks_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deck_id",
+            "required": true,
+            "schema": {
+              "title": "Deck Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Delete",
+        "tags": [
+          "decks"
+        ]
+      },
+      "get": {
+        "operationId": "decks_get_one",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deck_id",
+            "required": true,
+            "schema": {
+              "title": "Deck Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get One",
+        "tags": [
+          "decks"
+        ]
+      },
+      "patch": {
+        "operationId": "decks_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deck_id",
+            "required": true,
+            "schema": {
+              "title": "Deck Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeckUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Update",
+        "tags": [
+          "decks"
+        ]
+      }
+    },
+    "/api/decks/{deck_id}/export": {
+      "get": {
+        "description": "Download a deck as a JSON document (re-importable) or a text decklist.",
+        "operationId": "decks_export",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deck_id",
+            "required": true,
+            "schema": {
+              "title": "Deck Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "required": false,
+            "schema": {
+              "default": "json",
+              "enum": [
+                "json",
+                "text",
+                "mtgo",
+                "moxfield",
+                "archidekt"
+              ],
+              "title": "Format",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {},
+              "text/plain": {}
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Export",
+        "tags": [
+          "decks"
+        ]
+      }
+    },
+    "/api/status": {
+      "get": {
+        "operationId": "system_status",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Status",
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/api/vocabulary": {
+      "get": {
+        "operationId": "system_get_vocabulary",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vocabulary"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Vocabulary",
+        "tags": [
+          "system"
+        ]
+      }
+    }
+  }
+}
