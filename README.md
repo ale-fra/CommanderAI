@@ -2,6 +2,33 @@
 
 AI-powered Magic: The Gathering Commander deck builder that works with **your actual collection**. No more browsing decklists you can't build — get a playable 100-card deck from cards you already own.
 
+## Web UI
+
+```bash
+scripts/setup.sh          # Python 3.11+ and Node.js >= 22.12
+source .venv/bin/activate
+commanderai serve         # → http://127.0.0.1:8000
+```
+
+- **Collection** — browse your cards (images, search, color identity / type / mana
+  value / role / rarity / price filters), card details, upload and manage collections.
+- **Commanders** — every commander you own, with supporting-card counts; suggestions
+  for a theme or colors.
+- **Build** — pick a commander or let CommanderAI choose one for a theme/colors;
+  lands, variety + seed, budget, power bracket; the result with stats, tokens and the
+  build log; rebuild, re-roll, save, export.
+- **Decks** — your library: search, rename, notes, legality, export/import, compare
+  two decks, rebuild with the same settings.
+
+Dark theme by default, with a light toggle and responsive layouts for phones.
+After setup, the bundled demo collection and card catalog work offline. The demo
+contains 194 distinct card names; card images are not bundled, so placeholders are
+shown until a local image manifest and its files are configured. Upload your own
+collection from the Collection page.
+
+Run `scripts/test.sh` for Python tests, lint, UI tests/build and the API smoke test.
+See [docs/TESTING.md](docs/TESTING.md) for optional full-catalog and browser checks.
+
 ## What it does
 
 - **Builds decks** from your collection using heuristic scoring + optional AI (Claude) for smarter picks
@@ -14,12 +41,17 @@ AI-powered Magic: The Gathering Commander deck builder that works with **your ac
 ## Quick Start
 
 ```bash
-# Install
+# Install (creates .venv, installs everything, configures the bundled demo data)
+scripts/setup.sh
+source .venv/bin/activate
+
+# …or manually
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
 
-# Download card database (~165MB, one-time)
-commanderai update-data
+# Optional: download the full card catalog into a separate cache.
+COMMANDERAI_OFFLINE=0 COMMANDERAI_CACHE=~/.commanderai commanderai update-data
+# Update .env to use ~/.commanderai, then import your own collection.
 
 # Import your collection from Archidekt CSV export
 commanderai convert -i ~/Downloads/archidekt-collection-export.csv -o data/my_collection.txt
@@ -28,7 +60,7 @@ commanderai convert -i ~/Downloads/archidekt-collection-export.csv -o data/my_co
 commanderai build -c data/my_collection.txt -C "Atraxa, Praetors' Voice" --no-llm
 
 # Build with AI (smarter picks + explanations)
-export ANTHROPIC_API_KEY=sk-ant-...
+export ANTHROPIC_API_KEY=YOUR_API_KEY_HERE
 commanderai build -c data/my_collection.txt -C "Atraxa, Praetors' Voice"
 ```
 
@@ -43,8 +75,10 @@ commanderai build -c data/my_collection.txt -C "Atraxa, Praetors' Voice"
 | `tokens` | List all tokens a deck can create |
 | `convert` | Convert Archidekt/CSV export to simple text format |
 | `update-data` | Download/refresh Scryfall card database |
-| `validate` | Check a deck for Commander legality |
+| `validate` | Check a deck for Commander legality (size with quantities, color identity, singleton, commander/partner legality) |
 | `list` | List eligible commanders, saved decks, or the colors/themes/tribes/aliases/formats/brackets vocabularies |
+| `decks` | Deck database: `list`, `show`, `export`, `import`, `rename`, `delete`, `migrate` |
+| `serve` | Start the web UI and HTTP API at http://127.0.0.1:8000 (needs the `web` extra; the UI is built by `scripts/setup.sh`) |
 
 > `--collection`/`-c` is optional for `build`, `suggest`, `suggest-commanders`, and `list commanders` — it defaults to `data/my_collection.txt`.
 
@@ -56,13 +90,15 @@ commanderai list decks --tail 5             # 5 most recent saved decks
 
 ### Configuration (`.env`)
 
-Copy `.env.example` to `.env` to set defaults without exporting shell variables:
+The setup script creates `.env` with demo defaults. You can edit it or start from `.env.example`:
 
 ```bash
-ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_API_KEY=YOUR_API_KEY_HERE
 # COMMANDERAI_COLLECTION=data/my_collection.txt   # default collection file
 # COMMANDERAI_DECKS_DIR=decks                     # where decks are saved
 # COMMANDERAI_CACHE=~/.commanderai                # Scryfall cache location
+# COMMANDERAI_DB=data/commanderai.db              # deck database
+# COMMANDERAI_OFFLINE=1                           # never call external services
 ```
 
 Shell environment variables take precedence over `.env`.
@@ -75,7 +111,7 @@ commanderai build \
   -C "Commander Name" \          # Commander to build around
   --no-llm \                     # Skip AI (free, fast)
   --lands 35 \                   # Adjust land count
-  --budget 50 \                  # Max deck price (USD)
+  --budget 50 \                  # Max deck price (USD, all 100 cards incl. commander)
   --bracket 2 \                  # Power bracket 1-5 (see below)
   --variety 0.6 \                # 0=deterministic, higher=more variation between builds
   --seed 42 \                    # Reproducible variety (implies --variety if unset)
@@ -184,9 +220,32 @@ commanderai build -c data/my_collection.txt -C "Atraxa, Praetors' Voice" -b 5
 
 The bracket filter shows exactly which cards and combos were excluded, so you can see what got cut and why.
 
+**Offline:** when Commander Spellbook can't be reached — or with `COMMANDERAI_OFFLINE=1`, which disables every network call — the same bracket limits are applied from local card data: game changers (Scryfall's `game_changer` flag), extra-turn and mass-land-denial cards (rules text). Combos can't be detected offline; the build says so.
+
 ## Output
 
-Decks auto-save to `decks/` directory. Running build with the same commander creates numbered files (`atraxa.txt`, `atraxa_2.txt`, `atraxa_3.txt`...) — previous builds are never overwritten.
+Every build is stored in the deck database (`data/commanderai.db`, override with `COMMANDERAI_DB`) — the single source of truth — and exported to the `decks/` directory. Running build with the same commander creates numbered files (`atraxa.txt`, `atraxa_2.txt`, `atraxa_3.txt`...) — previous builds are never overwritten.
+
+```bash
+commanderai decks list                       # saved decks, newest first
+commanderai decks show 3 -v                  # deck + build parameters (theme, seed, budget…)
+commanderai decks export 3 -f moxfield       # or json / text / mtgo / archidekt, -o FILE
+commanderai decks import deck.json           # JSON export or any text decklist
+commanderai decks rename 3 "Spicy Atarka"
+commanderai decks delete 3
+commanderai decks migrate                    # import legacy decks/*.txt files
+```
+
+Existing `decks/*.txt` files from earlier versions are imported into the database automatically the first time the deck library is used.
+
+## Testing
+
+```bash
+scripts/test.sh          # unit tests, lint, golden CLI snapshots, differential test
+scripts/test.sh quick    # ~10 seconds
+```
+
+See [docs/TESTING.md](docs/TESTING.md) for what each suite proves and the expected results.
 
 ## How It Works
 
@@ -251,13 +310,25 @@ commanderai suggest -c data/my_collection.txt -C "Avatar Aang // Aang, Master of
 ```
 CommanderAI/
 ├── src/commanderai/
-│   ├── cli.py              # All CLI commands
-│   ├── config.py           # Settings and constants
+│   ├── cli/                # Typer commands + console rendering (thin front-end)
+│   ├── services/           # All use-cases (build, commanders, collection, analysis, ...)
+│   ├── settings.py         # Runtime settings from the environment
+│   ├── errors.py           # Typed, user-facing errors
+│   ├── reporting.py        # Structured progress/notice reporting
+│   ├── catalog.py          # Cached card-catalog loading
+│   ├── config.py           # Static configuration and constants
 │   ├── models.py           # Card, Deck, DeckSlot models
 │   ├── collection/         # Parse + match collection files
 │   ├── data/               # Scryfall bulk data + card index
 │   ├── deckbuilder/        # Scoring, slots, candidates, LLM, mana base
 │   └── output/             # Formatting and export
+├── src/commanderai/storage/  # SQLite deck database (decks, collections)
+├── src/commanderai/api/    # HTTP API (FastAPI) serving the web UI
+├── web/                    # Web UI (React + Mantine + Vite), built into web/dist
+├── scripts/                # setup.sh, test.sh, golden.py, difftest.py, check_example.py, demo
+├── docs/ARCHITECTURE.md    # Layers, service API, deck database, notice/error codes
+├── docs/TESTING.md         # How to run the tests and what to expect
+├── docs/UI_PLAN.md         # Web UI: stack, API contract, screens, delivery plan
 ├── decks/                  # Generated decks (gitignored)
 ├── data/                   # Local collection + cached card DB
 └── tests/

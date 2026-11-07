@@ -1,11 +1,12 @@
 """Budget-aware deck construction helpers.
 
-The ``--budget`` flag caps the deck's total estimated USD price (using Scryfall
-prices). Budget is enforced in three stages:
+The ``--budget`` flag caps the deck's total estimated USD price — all 100 cards,
+**commanders included** — using one price rule everywhere (``Card.price_usd``:
+nonfoil, else foil, else etched; unknown = 0). Budget is enforced in three stages:
 
 1. ``filter_candidates_by_budget`` removes any single candidate that already
-   exceeds the budget on its own, so neither the heuristic nor the LLM can pick
-   a card that can never fit.
+   exceeds what is left of the budget after paying for the commander(s), so
+   neither the heuristic nor the LLM can pick a card that can never fit.
 2. The LLM is told the budget via an extra instruction (prices are already in
    the prompt).
 3. ``enforce_budget`` runs after the full deck is assembled and greedily swaps
@@ -16,32 +17,28 @@ prices). Budget is enforced in three stages:
 from commanderai.deckbuilder.mana_base import count_pips, make_basic_land
 from commanderai.models import Card, DeckPick, DeckSlot, ScoredCard
 
-_PRICE_KEYS = ("usd", "usd_foil", "usd_etched")
-
 
 def card_price(card: Card) -> float:
     """Best-effort USD price for a card; 0.0 when unknown (e.g. basics)."""
-    prices = card.prices or {}
-    for key in _PRICE_KEYS:
-        val = prices.get(key)
-        if val:
-            try:
-                return float(val)
-            except (TypeError, ValueError):
-                continue
-    return 0.0
+    return card.price_usd or 0.0
 
 
-def deck_price(picks: list[DeckPick]) -> float:
-    return sum(card_price(p.card) for p in picks)
+def deck_price(picks: list[DeckPick], commanders: list[Card] | None = None) -> float:
+    """Price of the picks plus (optionally) the commanders."""
+    return sum(card_price(p.card) for p in picks) + sum(card_price(c) for c in commanders or [])
+
+
+def commanders_price(commander: Card, partner: Card | None = None) -> float:
+    return card_price(commander) + (card_price(partner) if partner else 0.0)
 
 
 def filter_candidates_by_budget(
     candidates: dict[DeckSlot, list[ScoredCard]], budget: float
 ) -> tuple[dict[DeckSlot, list[ScoredCard]], int]:
-    """Drop candidates whose individual price exceeds the whole budget.
+    """Drop candidates whose individual price exceeds ``budget``.
 
-    Returns the filtered candidates and the number of cards removed.
+    Callers pass the budget *remaining after the commanders*. Returns the
+    filtered candidates and the number of cards removed.
     """
     filtered: dict[DeckSlot, list[ScoredCard]] = {}
     removed = 0
@@ -64,7 +61,7 @@ def enforce_budget(
     budget: float,
     partner: Card | None = None,
 ) -> tuple[list[DeckPick], int, float]:
-    """Greedily reduce a deck's total price to ``budget`` via card swaps.
+    """Greedily reduce the deck's total price (commanders included) to ``budget``.
 
     - Non-land picks are swapped for the cheapest unused same-slot candidate
       that lowers the price.
@@ -72,9 +69,11 @@ def enforce_budget(
       uses.
 
     At each step the swap that saves the most money is applied. Returns the
-    (possibly modified) picks, the number of swaps made, and the final price.
+    (possibly modified) picks, the number of swaps made, and the final price
+    of the whole deck including the commander(s).
     """
     picks = list(picks)
+    commanders = [commander] + ([partner] if partner else [])
     identity = set(commander.color_identity)
     if partner:
         identity |= set(partner.color_identity)
@@ -87,7 +86,7 @@ def enforce_budget(
         pool[slot] = affordable
 
     swaps = 0
-    while deck_price(picks) > budget:
+    while deck_price(picks, commanders) > budget:
         best: tuple[float, int, Card] | None = None  # (savings, idx, replacement)
 
         for i, pick in enumerate(picks):
@@ -131,7 +130,7 @@ def enforce_budget(
             pool[old.slot] = [c for c in pool[old.slot] if c.name != replacement.name]
         swaps += 1
 
-    return picks, swaps, deck_price(picks)
+    return picks, swaps, deck_price(picks, commanders)
 
 
 def _basic_for_deck(

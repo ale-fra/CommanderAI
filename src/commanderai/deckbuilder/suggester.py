@@ -270,7 +270,7 @@ def find_suggestions_llm(
     lines.append("")
     lines.append("## Cards NOT owned that have synergy potential:")
     for card, hits in heuristic_picks:
-        price = card.prices.get("usd") or "?"
+        price = card.price_label() or "?"
         lines.append(
             f"- {card.name} {card.mana_cost} (${price}, EDHREC #{card.edhrec_rank or '?'}) "
             f"— {card.oracle_text[:100]}"

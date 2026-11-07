@@ -1,0 +1,10 @@
+{
+  "source": "Scryfall oracle card cache",
+  "source_sha256": "3921c45ab4283cc398fec0c330011c7a2ef8088c660314173e2b7744563b3cf2",
+  "collection": "data/collezione-fittizia.csv",
+  "collection_sha256": "6f40795cf5cbef66f870aab7d17f168471a3a7554f08fd74c78dd03ec5d6b2fc",
+  "records": 196,
+  "unique_names": 194,
+  "unresolved_names": [],
+  "images_bundled": false
+}

@@ -13,3 +13,21 @@ data/my_collection.txt
 .ruff_cache/
 decks/*.txt
 !decks/.gitkeep
+
+# Local deck database
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# Web UI (built during scripts/setup.sh)
+web/node_modules/
+web/dist/
+web/test-results/
+web/playwright-report/
+web/e2e/screenshots/
+web/tsconfig.tsbuildinfo
+web/.schema.check.ts
+
+# Locally generated submission archives
+submission/

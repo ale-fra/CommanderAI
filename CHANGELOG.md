@@ -1,5 +1,80 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- React web UI, FastAPI endpoints and SQLite deck/collection services integrated into the main application.
+- One-command setup with bundled demo data and a default test suite covering Python, the web UI and API smoke checks.
+- API integration tests using the bundled demo catalog; full-catalog regression fixtures remain optional.
+
+### Fixed
+- Scryfall downloads accept JSON arrays and gzipped JSONL, preserve the previous cache on failure and support an explicit destination.
+- Build collection selection, manual mode with a theme, reproducible rebuilds and repeated commander suggestions.
+
+### Added — web UI (Phase 1)
+- **Collection**: card grid/list with images, search, color-identity (within / exactly / including), type, mana value, role, rarity, price and commander filters in the URL; card detail dialog (both faces, prices, owned count, build with this commander); upload with match preview, rename / replace / delete uploaded collections.
+- **Commanders**: gallery with supporting-card counts and EDHREC rank, color filter, sorting; ranked suggestions for a theme / colors / variety.
+- **Build**: choose a commander (+ legal partner) or auto-pick for a theme/colors; lands, variety + seed, budget, bracket; result with role-grouped cards and reasons, stats charts, tokens, build log and warnings; rebuild, re-roll, save, export.
+- **Decks**: library with search, source filter, pagination; deck page with cards, stats, tokens, legality, build info and notes; rename, delete, export downloads, import (JSON or any text list), compare two decks, rebuild with the saved settings.
+- Dark theme by default with a light toggle, responsive down to phones, offline fonts and mana symbols, WCAG 2.1 AA (automated axe scans), bundle budget.
+- `scripts/demo_ui.sh` guided tour; Playwright suite (flows, screenshots, accessibility).
+
+### Changed (tests)
+- `scripts/test.sh` no longer runs the Playwright browser suite by default (too heavy for small sandboxes); it remains available as `scripts/test.sh e2e`. `scripts/test.sh quick web` is the ~1-minute reviewer check. Reviewer guide: `instruction.md`.
+
+### Fixed (found while building the UI)
+- Rapid consecutive filter/option changes could lose the first change (URL state).
+- The theme picker crashed on the `lifedrain` alias that duplicates an archetype name.
+
+### Added — HTTP API (web UI M1)
+- Complete JSON API for the web UI (21 operations): status, vocabulary, card detail; collections (built-in samples and precons, the default collection, uploaded collections: preview, create, rename/replace, delete); commanders, suggestions, legal partners; build previews (`POST /api/builds`, reproducible via the returned seed) and saving them; deck library (list/search/filter/paginate, detail with stats, tokens and validation, rename/notes, delete, export in every format, import).
+- One error shape for every failure, request validation included; interactive docs at `/api/docs`.
+- Typed web client: `npm run gen:api` generates TypeScript types from the OpenAPI schema; `openapi-fetch` client with `ApiError`; TanStack Query hooks.
+- `scripts/demo_api.sh`: guided walkthrough of the API against a throwaway server.
+- `Card.rarity`, `Card.set_name`; deck statistics service (mana curve, color pips, roles vs targets, card types).
+
+### Changed
+- TypeScript 5.9.3 (instead of 6.0.3) for the web UI: the OpenAPI type generator requires TypeScript 5.x.
+
+### Added — web UI foundation (stack spike)
+- `web/`: React 19 + Mantine 9 + Vite 8 + TypeScript 6 + React Router 7 + TanStack Query; dark theme by default with a light toggle; responsive app shell; offline fonts (Inter) and mana symbols (mana-font); Biome, Vitest, Playwright (desktop/tablet/phone screenshots).
+- `commanderai serve` (new `web` extra: FastAPI + uvicorn): `/api/status`, `/api/card`, card images, one JSON error shape, and the built UI with client-side routing.
+- `scripts/setup.sh` builds the UI when Node.js >= 22.12 is available; `scripts/test.sh web` and `scripts/test.sh e2e`.
+- `docs/UI_PLAN.md`: validated stack, API contract, screens, delivery plan.
+
+### Fixed (phase D)
+- **`validate`** counts quantities (`15 Plains` = 15), so all five precons validate; checks commander legality and partner pairing; new `--partner/-P`; reports unknown cards.
+- **Budget** covers all 100 cards including the commander(s), and one price rule (nonfoil → foil → etched) is used everywhere, so `Budget: deck fits at $X` and `Est. price` agree. Warns when the commander(s) alone exceed the budget.
+- **Power brackets offline**: when Commander Spellbook is unreachable the build no longer silently skips the bracket — game changers, extra turns and mass land denial are filtered from local card data (with a notice that combos were not checked). The partner is now sent to Spellbook too.
+- **`tokens`**: `Artifact — Food/Treasure/Clue…` instead of `— Food`; `tapped` no longer part of token names; copy tokens listed as `Copy of a permanent`.
+- `list decks` card count (fixed by the deck database).
+
+### Added (phase D)
+- `COMMANDERAI_OFFLINE=1`: never call external services (set by `scripts/setup.sh` and all test harnesses).
+- `Card.game_changer`, `Card.price_usd`, `Deck.unpriced_cards`; `BudgetReport.commanders_price`; `BracketReport.mode`.
+
+### Added — deck database (phase C)
+- **SQLite deck database** (`data/commanderai.db`, `COMMANDERAI_DB`) as the single source of truth. `build` stores every deck (full card snapshot + build parameters and report) and still writes the `decks/*.txt` export; it prints the id: `Deck saved → decks/x.txt (deck #N)`.
+- **`decks` command group**: `list`, `show`, `export` (json/text/mtgo/moxfield/archidekt), `import` (JSON export or any text decklist), `rename`, `delete`, `migrate`.
+- **Legacy migration**: existing `decks/*.txt` files (all formats written by 0.7.0) are imported automatically on first use; tracked by path + hash so nothing is imported twice and deleted decks are not resurrected.
+- **Stored collections** (`collections` table and service) for uploaded collections; builds/suggestions accept `collection_id`.
+- `scripts/setup.sh` (one-command environment setup), `scripts/test.sh` (all test suites with expected results and a summary), `scripts/check_example.py` (re-test a stored example), `scripts/demo_deck_library.sh` (guided tour), `scripts/difftest.py`, `docs/TESTING.md`, `tests/golden/CHANGES.md`.
+
+### Changed — deck database (phase C)
+- `list decks` reads the database (new layout; shows the correct card count of 100).
+- LLM anti-repetition reads previous decks from the database.
+- `build -f <unknown format>` fails immediately instead of crashing after the build.
+
+### Changed
+- **Service-layer refactor of the CLI.** The 1,257-line `cli.py` is now a thin `cli/` package over a new `services/` layer (`build`, `commanders`, `collection`, `analysis`, `suggest`, `reference`, `deck_files`) that returns typed, JSON-serializable results and never prints. Supporting modules: `settings.py` (runtime settings), `errors.py` (typed errors with stable codes), `reporting.py` (structured notices/progress), `catalog.py` (cached catalog). CLI output is unchanged — verified byte-for-byte against 133 golden cases captured from the previous version, plus a differential test of partner/bracket/LLM paths. See `docs/ARCHITECTURE.md`.
+- The oracle card file is parsed once per command instead of twice.
+- Missing deck/input files and a missing card database now produce a clear error instead of a traceback.
+
+### Added
+- `scripts/golden.py` golden-master harness and `tests/golden/baseline/` snapshot.
+- Service contract tests (`tests/test_services.py`).
+- `COMMANDERAI_DB` setting (default `data/commanderai.db`) reserved for the deck database.
+
 ## [0.7.0] - 2026-05-29
 
 ### Fixed

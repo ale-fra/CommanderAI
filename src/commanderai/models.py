@@ -1,5 +1,20 @@
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class PublicModel(BaseModel):
+    """Base for models exposed by the HTTP API.
+
+    Fields with defaults are always present in responses, so the response JSON
+    schema marks them required (generated TypeScript types are then exact).
+    Affects the JSON schema only, never validation or serialization.
+    """
+
+    model_config = ConfigDict(json_schema_serialization_defaults_required=True)
+
+# Scryfall price fields in order of preference: a card with no regular (nonfoil)
+# price is valued at its foil / etched price.
+PRICE_KEYS = ("usd", "usd_foil", "usd_etched")
 
 
 class DeckSlot(str, Enum):
@@ -27,8 +42,29 @@ class Card(BaseModel):
     legalities: dict[str, str] = Field(default_factory=dict)
     prices: dict[str, str | None] = Field(default_factory=dict)
     set_code: str = ""
+    set_name: str = ""
     collector_number: str = ""
+    rarity: str = ""
     card_faces: list[dict] | None = None
+    game_changer: bool = False
+
+    def price_label(self) -> str | None:
+        """The raw USD price string used for this card (see PRICE_KEYS), or None."""
+        for key in PRICE_KEYS:
+            val = (self.prices or {}).get(key)
+            if val:
+                try:
+                    float(val)
+                except (TypeError, ValueError):
+                    continue
+                return val
+        return None
+
+    @property
+    def price_usd(self) -> float | None:
+        """Best-effort USD price; None when Scryfall has no price for the card."""
+        label = self.price_label()
+        return float(label) if label is not None else None
 
 
 class CollectionEntry(BaseModel):
@@ -74,13 +110,19 @@ class Deck(BaseModel):
 
     @property
     def total_price(self) -> float:
-        total = 0.0
-        priced = [p.card for p in self.cards] + self.commanders
-        for card in priced:
-            usd = card.prices.get("usd")
-            if usd:
-                try:
-                    total += float(usd)
-                except ValueError:
-                    pass
-        return total
+        """Estimated USD price of all 100 cards, commanders included.
+
+        Cards without any price data count as 0 (see ``unpriced_cards``).
+        """
+        return sum(card.price_usd or 0.0 for card in self._all_cards())
+
+    @property
+    def unpriced_cards(self) -> int:
+        """Cards (excluding basic lands) with no Scryfall price data."""
+        return sum(
+            1 for card in self._all_cards()
+            if card.price_usd is None and "basic" not in card.type_line.lower()
+        )
+
+    def _all_cards(self) -> list[Card]:
+        return [p.card for p in self.cards] + self.commanders

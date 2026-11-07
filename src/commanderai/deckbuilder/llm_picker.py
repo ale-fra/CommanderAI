@@ -63,7 +63,7 @@ def build_prompt(
         lines.append(f"### {slot.value} (pick ~{quota})")
         for i, sc in enumerate(slot_candidates, 1):
             card = sc.card
-            price = card.prices.get("usd") or "?"
+            price = card.price_label() or "?"
             lines.append(
                 f"{i}. {card.name} [{card.mana_cost}] "
                 f"(Score: {sc.score:.0f}, ${price}) — "

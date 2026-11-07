@@ -23,6 +23,16 @@ _NUMBER_WORDS = {
 
 _COLORS = {"white", "blue", "black", "red", "green", "colorless"}
 
+# Words describing how a token enters, not what it is ("create a tapped 2/2 ...").
+_STATE_WORDS = {"tapped", "untapped"}
+
+COPY_TOKEN_NAME = "Copy of a permanent"
+_COPY_TOKEN_PATTERN = re.compile(
+    r"creates?\s+(?:a|an|one|two|three|four|five|x|that many|\d+)\s+tokens?\s+"
+    r"that(?:'s| are)\s+(?:a\s+)?cop(?:y|ies)\s+of",
+    re.IGNORECASE,
+)
+
 _TOKEN_PATTERN = re.compile(
     r"creates?\s+"
     r"(?:(?:a|an|one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+)"
@@ -38,6 +48,13 @@ _X_PT_PATTERN = re.compile(r"(X|\*)/(\d+|X|\*)")
 
 _FALSE_POSITIVE_NAMES = {"or more", "twice", "that many", "those", "additional"}
 
+# Predefined artifact tokens whose rules text doesn't spell out their type
+# ("create a Food token").
+_ARTIFACT_TOKENS = {
+    "food", "treasure", "clue", "blood", "map", "powerstone", "gold", "incubator",
+    "junk", "shard", "lander", "mutagen",
+}
+
 
 def extract_tokens(cards: list[Card]) -> list[TokenInfo]:
     tokens_map: dict[str, TokenInfo] = {}
@@ -47,9 +64,15 @@ def extract_tokens(cards: list[Card]) -> list[TokenInfo]:
         if not oracle:
             continue
 
+        if _COPY_TOKEN_PATTERN.search(oracle):
+            # "create a token that's a copy of ..." names no token type.
+            _add(tokens_map, TokenInfo(name=COPY_TOKEN_NAME), card.name)
+
         for match in _TOKEN_PATTERN.finditer(oracle):
             desc = match.group(1).strip()
             with_clause = (match.group(2) or "").strip()
+            if desc.lower().startswith("token"):
+                continue  # the tail of a copy-token sentence, handled above
             token = _parse_token_description(desc)
             if not token.name or token.name.lower() in _FALSE_POSITIVE_NAMES:
                 continue
@@ -60,16 +83,20 @@ def extract_tokens(cards: list[Card]) -> list[TokenInfo]:
                     if kw and kw.capitalize() not in token.keywords:
                         token.keywords.append(kw.capitalize())
 
-            key = f"{token.name}|{token.power}/{token.toughness}"
-            if key in tokens_map:
-                if card.name not in tokens_map[key].created_by:
-                    tokens_map[key].created_by.append(card.name)
-            else:
-                token.created_by.append(card.name)
-                tokens_map[key] = token
+            _add(tokens_map, token, card.name)
 
     result = sorted(tokens_map.values(), key=lambda t: t.name.lower())
     return result
+
+
+def _add(tokens_map: dict[str, TokenInfo], token: TokenInfo, creator: str) -> None:
+    key = f"{token.name}|{token.power}/{token.toughness}"
+    if key in tokens_map:
+        if creator not in tokens_map[key].created_by:
+            tokens_map[key].created_by.append(creator)
+    else:
+        token.created_by.append(creator)
+        tokens_map[key] = token
 
 
 def _parse_token_description(desc: str) -> TokenInfo:
@@ -105,6 +132,10 @@ def _parse_token_description(desc: str) -> TokenInfo:
 
         if word in _COLORS:
             colors.append(word.capitalize())
+            i += 1
+            continue
+
+        if word in _STATE_WORDS:
             i += 1
             continue
 
@@ -145,6 +176,8 @@ def _parse_token_description(desc: str) -> TokenInfo:
 
     if type_words:
         token.types = " ".join(type_words)
+    elif " ".join(name_parts).lower() in _ARTIFACT_TOKENS:
+        token.types = "Artifact"
 
     if name_parts:
         token.name = " ".join(name_parts)

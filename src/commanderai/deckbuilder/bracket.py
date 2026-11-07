@@ -1,3 +1,17 @@
+"""Power-bracket filtering.
+
+Online: the candidate pool is sent to Commander Spellbook's ``estimate-bracket``
+endpoint, which reports banned cards, game changers, extra-turn and mass-land-
+denial cards, and combos with their bracket tags.
+
+Offline (no network, an API error, or ``offline=True``): the same bracket rules
+are applied from local card data — the Scryfall ``game_changer`` flag plus
+oracle-text detection of extra turns and mass land denial. Combos cannot be
+detected offline; ``BracketResult.mode`` / ``offline_reason`` say so.
+"""
+
+import re
+
 import httpx
 
 from commanderai.models import Card
@@ -20,6 +34,8 @@ class BracketResult:
         self.excluded_combos: list[tuple[list[str], str]] = []
         self.allowed_names: set[str] = set()
         self.prioritized_names: set[str] = set()
+        self.mode: str = "online"              # online | offline | skipped
+        self.offline_reason: str | None = None  # why the offline rules were used
 
 
 def _card_entry(name: str) -> dict:
@@ -30,16 +46,22 @@ def check_bracket(
     commander: Card,
     candidates: list[Card],
     bracket: int,
+    partner: Card | None = None,
+    offline: bool = False,
 ) -> BracketResult:
     result = BracketResult()
     if bracket >= 5:
+        result.mode = "skipped"
         result.allowed_names = {c.name for c in candidates}
         return result
+
+    if offline:
+        return check_bracket_offline(candidates, bracket, reason="offline mode")
 
     max_tags = BRACKET_TO_MAX_TAG[bracket]
 
     payload = {
-        "commanders": [_card_entry(commander.name)],
+        "commanders": [_card_entry(c.name) for c in (commander, partner) if c is not None],
         "main": [_card_entry(c.name) for c in candidates],
     }
 
@@ -51,9 +73,10 @@ def check_bracket(
         )
         resp.raise_for_status()
         data = resp.json()
-    except (httpx.HTTPError, Exception):
-        result.allowed_names = {c.name for c in candidates}
-        return result
+    except Exception as e:  # noqa: BLE001 — any failure → local rules
+        return check_bracket_offline(
+            candidates, bracket, reason=f"Commander Spellbook unreachable: {type(e).__name__}"
+        )
 
     excluded_names: set[str] = set()
     game_changers: list[tuple[str, dict]] = []
@@ -159,6 +182,85 @@ def check_bracket(
 
     all_names = {c.name for c in candidates}
     result.allowed_names = all_names - excluded_names
+    result.prioritized_names &= result.allowed_names
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Offline rules
+# ---------------------------------------------------------------------------
+
+_EXTRA_TURN_RE = re.compile(
+    r"(?<!can't )(?<!cannot )\btakes? (?:an|one|two|three|x|that many) extra turns?\b", re.IGNORECASE
+)
+_MASS_LAND_DENIAL_RES = [
+    re.compile(p, re.IGNORECASE)
+    for p in (
+        r"\bdestroy all (?:[^.]*\b)?lands\b",           # Armageddon, Ravages of War, Obliterate
+        r"\bexile all (?:[^.]*\b)?lands\b",
+        r"\breturn all lands\b",                         # Sunder
+        r"\beach (?:player|opponent) sacrifices (?:all|\w+|x) lands\b",
+        r"\blands? (?:don't|do not) untap\b",             # Winter Orb style
+        r"\bcan't untap more than\b",                    # Static Orb style
+        r"\bnonbasic lands are\b",                       # Blood Moon style
+    )
+]
+
+
+def is_extra_turn_card(card: Card) -> bool:
+    return bool(_EXTRA_TURN_RE.search(card.oracle_text or ""))
+
+
+def is_mass_land_denial_card(card: Card) -> bool:
+    text = card.oracle_text or ""
+    return any(p.search(text) for p in _MASS_LAND_DENIAL_RES)
+
+
+def check_bracket_offline(candidates: list[Card], bracket: int, reason: str) -> BracketResult:
+    """Apply the bracket rules from local card data (no combo detection).
+
+    - Brackets 1-2: no game changers; brackets 1-3: no extra turns, no mass land
+      denial (same as online).
+    - Bracket 3: up to 3 game changers are kept (the most popular by EDHREC rank)
+      and prioritised; the rest are excluded.
+    - Bracket 4: nothing is filtered (banned cards are never in the catalog).
+    """
+    result = BracketResult()
+    result.mode = "offline"
+    result.offline_reason = reason
+    names = {c.name for c in candidates}
+    if bracket >= 4:
+        result.allowed_names = names
+        return result
+
+    excluded: set[str] = set()
+    game_changers: list[Card] = []
+    for card in candidates:
+        if card.name in excluded:
+            continue
+        if card.game_changer:
+            game_changers.append(card)
+            continue
+        if is_extra_turn_card(card):
+            excluded.add(card.name)
+            result.excluded_cards.append((card.name, "extra turn"))
+        elif is_mass_land_denial_card(card):
+            excluded.add(card.name)
+            result.excluded_cards.append((card.name, "mass land denial"))
+
+    max_game_changers = 3 if bracket == 3 else 0
+    game_changers.sort(key=lambda c: (c.edhrec_rank or 99999, c.name))
+    for card in game_changers[:max_game_changers]:
+        result.prioritized_names.add(card.name)
+    for card in game_changers[max_game_changers:]:
+        excluded.add(card.name)
+        reason_text = (
+            "game changer" if max_game_changers == 0
+            else f"game changer (exceeds {max_game_changers} limit)"
+        )
+        result.excluded_cards.append((card.name, reason_text))
+
+    result.allowed_names = names - excluded
     result.prioritized_names &= result.allowed_names
     return result
 
