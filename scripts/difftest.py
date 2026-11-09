@@ -25,7 +25,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-os.environ.update(COMMANDERAI_CACHE=str(ROOT/"offline-data"), COLUMNS="120", NO_COLOR="1", TERM="dumb", ANTHROPIC_API_KEY="")
+os.environ.update(COMMANDERAI_CACHE=str(ROOT/"tests/fixtures/integration/catalog"), COLUMNS="120", NO_COLOR="1", TERM="dumb", ANTHROPIC_API_KEY="", COMMANDERAI_OFFLINE="0")
 from rich.console import Console
 from typer.testing import CliRunner
 
@@ -42,7 +42,7 @@ import commanderai.services.build as buildmod
 import commanderai.services.context as ctxmod
 
 # ---- synthetic catalog: real cards + partner commanders -----------------------
-cards, non_legal = load_catalog_data(ROOT/"offline-data"/"oracle_cards.json")
+cards, non_legal = load_catalog_data(ROOT/"tests/fixtures/integration/catalog"/"oracle_cards.json")
 def cmdr(name, colors, text, kw, tl="Legendary Creature — Human Wizard"):
     return Card(name=name, type_line=tl, color_identity=colors, colors=colors, oracle_text=text,
                 keywords=kw, edhrec_rank=500, mana_cost="{2}" + "".join(f"{{{c}}}" for c in colors), cmc=2+len(colors),
@@ -89,9 +89,9 @@ def install(llm):
     orig.llm_build = llm
     buildmod.llm_build = llm
 
-COLL = (ROOT/"commanderai-sample/expanded-collection.txt").read_text() + \
+COLL = (ROOT/"tests/fixtures/integration/collections/expanded-collection.txt").read_text() + \
     "\n1 Alpha Partner\n1 Beta Partner\n1 Omega Partner\n1 Gamma Chooser\n1 Epsilon Background\n1 Delta Background\n1 Arcane Signat\n1 Totally Madeup Card\n"
-SMALL = "\n".join(l for l in (ROOT/"commanderai-sample/precons/first-flight.txt").read_text().splitlines()) + "\n1 Alpha Partner\n1 Beta Partner\n1 Zeta Partner\n1 Eta Partner\n"
+SMALL = "\n".join(l for l in (ROOT/"tests/fixtures/integration/collections/precons/first-flight.txt").read_text().splitlines()) + "\n1 Alpha Partner\n1 Beta Partner\n1 Zeta Partner\n1 Eta Partner\n"
 
 CASES = [
     ("partner-explicit", ["build", "-C", "Alpha Partner", "-P", "Beta Partner", "--no-llm", "-v"], fake_llm_build, COLL),
@@ -108,7 +108,7 @@ CASES = [
     ("small-partner-shortfall", ["build", "-C", "Alpha Partner", "-P", "Beta Partner", "--no-llm"], fake_llm_build, SMALL),
     ("small-partner-shortfall-wu", ["build", "-C", "Zeta Partner", "-P", "Eta Partner", "--no-llm"], fake_llm_build, SMALL),
     ("partner-auto-variety", ["build", "--theme", "tokens", "--colors", "simic", "--no-llm", "--seed", "8"], fake_llm_build, COLL),
-    ("small-llm-shortfall", ["build", "-C", "Isperia, Supreme Judge"], fake_llm_build, SMALL),
+    ("small-llm-shortfall", ["build", "-C", "Fixture Flight Commander"], fake_llm_build, SMALL),
     ("list-commanders-partners", ["list", "commanders"], fake_llm_build, COLL),
     ("suggest-commanders-partners", ["suggest-commanders", "--top", "30"], fake_llm_build, COLL),
 ]

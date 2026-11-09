@@ -713,6 +713,22 @@ def main() -> int:
             if affected:
                 print(f"      may change {len(affected)} case(s): {', '.join(affected)}")
         return 0
+    required = [OFFLINE / "oracle_cards.json", EXPANDED,
+                SAMPLE / "sample-collection.txt", SAMPLE / "expanded-collection.csv",
+                SAMPLE / "sample-collection.csv", SAMPLE / "supplied-zaxara-decklist.txt",
+                *[PRECONS / f"{slug}.txt" for slug in
+                  ("first-flight", "grave-danger", "chaos-incarnate",
+                   "draconic-destruction", "token-triumph")]]
+    missing = [str(path.relative_to(ROOT)) for path in required if not path.exists()]
+    if args.cmd == "compare":
+        snapshot = args.against or (BASELINE if args.documented else DEFAULT_SNAPSHOT)
+        if not snapshot.is_dir():
+            missing.append(str(snapshot))
+    if missing:
+        print("Historical comparison inputs are unavailable: " + ", ".join(missing))
+        print("The default test suite uses bundled fixtures. Original historical inputs "
+              "must be restored together; do not recapture a baseline from current code.")
+        return 2
     if args.cmd == "capture":
         if args.dest.resolve() == BASELINE.resolve() and not args.force_baseline:
             print("Refusing to overwrite the original baseline (use --force-baseline).")

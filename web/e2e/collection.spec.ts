@@ -6,9 +6,9 @@ test.describe("Collection", () => {
     await page.goto("/");
     await expect(page).toHaveURL(/\/collection$/);
     await expect(page.getByRole("heading", { name: "Expanded sample", level: 2 })).toBeVisible();
-    await expect(page.getByText("500 cards (796 copies)")).toBeVisible();
-    await expect(page.getByText("Showing 500 of 500 cards")).toBeVisible();
-    const first = page.getByRole("button", { name: /show details/ }).first();
+    await expect(page.getByText("291 cards (466 copies)")).toBeVisible();
+    await expect(page.getByText("Showing 291 of 291 cards")).toBeVisible();
+    const first = page.getByRole("button", { name: /^Accursed Marauder/ });
     await expect(first.locator("img")).toHaveJSProperty("naturalWidth", 488);
   });
 
@@ -19,8 +19,8 @@ test.describe("Collection", () => {
     await page.goto("/collection");
     await page.getByRole("textbox", { name: "Search cards" }).fill("dragon");
     await expect(page).toHaveURL(/q=dragon/);
-    const count = page.getByText(/^Showing \d+ of 500 cards$/);
-    await expect(count).not.toHaveText("Showing 500 of 500 cards");
+    const count = page.getByText(/^Showing \d+ of 291 cards$/);
+    await expect(count).not.toHaveText("Showing 291 of 291 cards");
 
     await page.getByRole("textbox", { name: "Search cards" }).fill("");
     await page.getByRole("button", { name: "Blue" }).click();
@@ -31,18 +31,20 @@ test.describe("Collection", () => {
     const commandersOnly = page.getByRole("switch", { name: "Commanders only" });
     await commandersOnly.click();
     await expect(commandersOnly).toBeChecked();
-    await expect(page.getByText("Showing 4 of 500 cards")).toBeVisible(); // Tatyova, Inga and Esika, Ezuri, Zegana
+    await expect(page.getByText("Showing 4 of 291 cards")).toBeVisible(); // Tatyova, Inga and Esika, Ezuri, Zegana
 
     await page.getByRole("combobox", { name: "Sort by" }).click();
     await page.getByRole("option", { name: "EDHREC rank" }).click();
-    const names = page.getByRole("button", { name: /show details/ });
+    const names = page
+      .getByRole("button")
+      .filter({ has: page.locator('img[src^="/api/images/"]') });
     await expect(names.first()).toHaveAccessibleName(/^Tatyova, Benthic Druid/);
 
     // Deep link restores everything.
     await page.reload();
-    await expect(page.getByText("Showing 4 of 500 cards")).toBeVisible();
+    await expect(page.getByText("Showing 4 of 291 cards")).toBeVisible();
     await page.getByRole("button", { name: "Reset filters" }).click();
-    await expect(page.getByText("Showing 500 of 500 cards")).toBeVisible();
+    await expect(page.getByText("Showing 291 of 291 cards")).toBeVisible();
   });
 
   test("list view and the card detail dialog (double-faced card flips)", async ({ page }, info) => {
@@ -130,7 +132,7 @@ test.describe("Collection", () => {
       await setScheme(page, scheme);
       await useCollection(page, "builtin:expanded");
       await page.goto("/collection");
-      await expect(page.getByText("Showing 500 of 500 cards")).toBeVisible();
+      await expect(page.getByText("Showing 291 of 291 cards")).toBeVisible();
       await shot(page, info, "collection", scheme);
       if (scheme === "dark") {
         await page.getByRole("textbox", { name: "Search cards" }).fill("zaxara");

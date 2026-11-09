@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run CommanderAI's test suites and print a PASS/FAIL summary.
 #
-#   scripts/test.sh            unit + lint + web + API smoke (no browser tests)
+#   scripts/test.sh            unit + lint + differential + web + API smoke (no browser tests)
 #   scripts/test.sh quick web  what a reviewer needs (about 1 minute)
 #   scripts/test.sh quick      unit tests + lint only (about 10 seconds)
 #   scripts/test.sh unit       pytest unit/service/library tests
@@ -12,7 +12,7 @@
 #   scripts/test.sh diff       original 0.7.0 CLI vs current CLI with injected fakes
 #   scripts/test.sh web        web UI: Biome lint/format, TypeScript, component tests (Vitest)
 #   scripts/test.sh smoke      demo collection, build, save/export/delete and built UI
-#   scripts/test.sh e2e        OPTIONAL, heavy: web UI in a real browser (Playwright + Chromium,
+#   scripts/test.sh e2e        OPTIONAL: web UI in a real browser (Playwright + Chromium,
 #                              ~5 min) against `commanderai serve`; not part of `all`.
 #                              Needs a Playwright Chromium (npx playwright install chromium).
 #
@@ -58,7 +58,7 @@ run_suite() {  # name, description, expected, key-lines regex, command...
 
 suite_unit() {
     run_suite unit "pytest: models, deck builder, services, deck database" \
-        "all available tests pass; optional full-catalog fixtures may be skipped" \
+        "all standard tests pass; historical snapshot comparison is deselected" \
         "passed|failed|error" \
         "$PY" -m pytest -q
 }
@@ -70,7 +70,8 @@ suite_lint() {
         src/commanderai/catalog.py src/commanderai/deckbuilder/budget.py src/commanderai/api \
         scripts/golden.py scripts/difftest.py scripts/check_example.py scripts/verify_ui.py \
         tests/test_services.py tests/test_library.py tests/test_fixes.py tests/test_api.py \
-        tests/test_api_demo.py tests/test_scryfall.py
+        tests/test_api_demo.py tests/test_scryfall.py tests/conftest.py tests/test_fixture_bundle.py \
+        scripts/serve_test_app.py
 }
 suite_golden() {
     run_suite golden "every CLI case vs tests/golden/expected (byte-for-byte)" \
@@ -110,7 +111,7 @@ e2e_run() {
 }
 suite_e2e() {
     run_suite e2e "web UI in Chromium at desktop/tablet/phone sizes + WCAG scans (Playwright, real API)" \
-        "'77 passed', '58 skipped' — screenshots in web/e2e/screenshots/" \
+        "all applicable cases pass; layout-specific cases intentionally skipped" \
         "[0-9]+ (passed|failed|flaky|skipped)" \
         e2e_run
 }
@@ -125,7 +126,7 @@ selected=("$@")
 [[ ${#selected[@]} -eq 0 ]] && selected=(all)
 for s in "${selected[@]}"; do
     case "$s" in
-        all)      need_web; suite_unit; suite_lint; suite_web; suite_smoke ;;
+        all)      need_web; suite_unit; suite_lint; suite_diff; suite_web; suite_smoke ;;
         quick)    suite_unit; suite_lint ;;
         web)      need_web; suite_web ;;
         e2e)      need_web; suite_e2e ;;

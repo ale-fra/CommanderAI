@@ -15,7 +15,7 @@ const PAGES: {
   {
     name: "commanders",
     path: "/commanders",
-    ready: async (p) => expect(p.getByText("27 commanders")).toBeVisible(),
+    ready: async (p) => expect(p.getByText("16 commanders")).toBeVisible(),
   },
   {
     name: "build result",
@@ -31,7 +31,7 @@ const PAGES: {
   {
     name: "about",
     path: "/about",
-    ready: async (p) => expect(p.getByText("500 cards")).toBeVisible(),
+    ready: async (p) => expect(p.getByText("291 cards")).toBeVisible(),
   },
 ];
 
@@ -59,7 +59,7 @@ for (const scheme of ["dark", "light"] as const) {
     test.skip(info.project.name !== "desktop", "desktop");
     const build = await (
       await request.post("/api/builds", {
-        data: { collection: "builtin:expanded", commander: "Kardur, Doomscourge" },
+        data: { collection: "builtin:expanded", commander: "Fixture Chaos Commander" },
       })
     ).json();
     const deck = await (

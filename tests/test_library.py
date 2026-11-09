@@ -47,13 +47,8 @@ from commanderai.storage import Database
 from commanderai.storage.db import SCHEMA_VERSION
 
 ROOT = Path(__file__).resolve().parent.parent
-OFFLINE = ROOT / "offline-data"
-SAMPLE = ROOT / "commanderai-sample"
-
-pytestmark = pytest.mark.skipif(
-    not (OFFLINE / "oracle_cards.json").exists(), reason="offline catalog not available"
-)
-
+OFFLINE = ROOT / "tests/fixtures/integration/catalog"
+SAMPLE = ROOT / "tests/fixtures/integration/collections"
 
 @pytest.fixture
 def settings(tmp_path) -> Settings:
@@ -62,6 +57,7 @@ def settings(tmp_path) -> Settings:
         default_collection=SAMPLE / "expanded-collection.txt",
         cache_dir=OFFLINE,
         db_path=tmp_path / "lib.db",
+        offline=True,
     )
 
 
@@ -78,7 +74,7 @@ def ctx(settings) -> ServiceContext:
 def zaxara_result(tmp_path_factory):
     tmp = tmp_path_factory.mktemp("build")
     s = Settings(decks_dir=tmp / "decks", default_collection=SAMPLE / "expanded-collection.txt",
-                 cache_dir=OFFLINE, db_path=tmp / "unused.db")
+                 cache_dir=OFFLINE, db_path=tmp / "unused.db", offline=True)
     return build_deck(ServiceContext(settings=s), BuildRequest(commander="Zaxara, the Exemplary"))
 
 
@@ -124,7 +120,7 @@ def test_save_and_get_roundtrip(ctx, zaxara_result):
 
 
 def test_list_order_filter_and_pagination(ctx, settings, zaxara_result):
-    atarka = build_deck(new_ctx(settings), BuildRequest(commander="Atarka, World Render"))
+    atarka = build_deck(new_ctx(settings), BuildRequest(commander="Fixture Dragon Commander"))
     first = save_build(ctx, zaxara_result)
     second = save_build(ctx, atarka)
     third = save_build(ctx, zaxara_result, name="Zaxara again")
@@ -301,7 +297,7 @@ def test_prior_card_lists_from_database(ctx, zaxara_result):
     assert len(lists) == 1
     expected = [p.card.name for p in zaxara_result.deck.cards if p.slot != DeckSlot.LAND]
     assert lists[0] == expected
-    assert prior_card_lists(ctx, "Atarka, World Render") == []
+    assert prior_card_lists(ctx, "Fixture Dragon Commander") == []
 
 
 def test_build_uses_stored_decks_as_prior_builds(ctx, zaxara_result):
@@ -334,7 +330,7 @@ def test_stored_collections_crud(ctx):
 def test_build_from_stored_collection(ctx):
     text = (SAMPLE / "precons" / "first-flight.txt").read_text()
     stored = save_collection(ctx, "First Flight", text)
-    result = build_deck(ctx, BuildRequest(commander="Isperia, Supreme Judge", collection_id=stored.id))
+    result = build_deck(ctx, BuildRequest(commander="Fixture Flight Commander", collection_id=stored.id))
     assert result.match.source == f"collection:#{stored.id} First Flight"
     rec = save_build(ctx, result)
     assert list_decks(ctx)[0].collection_source == f"collection:#{stored.id} First Flight"

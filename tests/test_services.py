@@ -30,15 +30,10 @@ from commanderai.services.reference import vocabulary
 from commanderai.settings import Settings
 
 ROOT = Path(__file__).resolve().parent.parent
-OFFLINE = ROOT / "offline-data"
-SAMPLE = ROOT / "commanderai-sample"
+OFFLINE = ROOT / "tests/fixtures/integration/catalog"
+SAMPLE = ROOT / "tests/fixtures/integration/collections"
 EXPANDED = SAMPLE / "expanded-collection.txt"
 FIRST_FLIGHT = SAMPLE / "precons" / "first-flight.txt"
-
-pytestmark = pytest.mark.skipif(
-    not (OFFLINE / "oracle_cards.json").exists(), reason="offline catalog not available"
-)
-
 
 @pytest.fixture
 def settings(tmp_path) -> Settings:
@@ -47,6 +42,7 @@ def settings(tmp_path) -> Settings:
         default_collection=EXPANDED,
         cache_dir=OFFLINE,
         db_path=tmp_path / "test.db",
+        offline=True,
     )
 
 
@@ -75,7 +71,7 @@ def test_settings_from_env_mapping(tmp_path):
 def test_catalog_is_cached_and_reported(ctx):
     catalog_mod.clear_cache()
     first = ctx.catalog()
-    assert len(first.all_cards) == 500
+    assert len(first.all_cards) == 291
     assert codes(ctx) == ["catalog.loaded"]
     assert ctx.reporter.steps == ["Loading card database..."]
     # A second context reuses the parsed index.
@@ -93,8 +89,8 @@ def test_missing_catalog_raises_typed_error(tmp_path, settings):
 
 def test_load_collection_report(ctx):
     loaded = load_collection(ctx, EXPANDED)
-    assert loaded.report.unique_cards == 500
-    assert loaded.report.copies == 796
+    assert loaded.report.unique_cards == 291
+    assert loaded.report.copies == 466
     assert loaded.report.unmatched == []
 
 
@@ -114,7 +110,7 @@ def test_missing_collection_file(ctx, tmp_path):
 
 def test_convert_collection_csv():
     result = convert_collection(SAMPLE / "expanded-collection.csv")
-    assert result.unique_cards == 500 and result.total_cards == 796
+    assert result.unique_cards == 291 and result.total_cards == 466
     with pytest.raises(EmptyCollectionError):
         convert_collection("")
 
@@ -123,7 +119,7 @@ def test_convert_collection_csv():
 
 def test_list_commanders_sorted_by_rank(ctx):
     commanders = list_commanders(ctx, EXPANDED)
-    assert len(commanders) == 27
+    assert len(commanders) == 16
     ranks = [c.edhrec_rank for c in commanders]
     assert ranks == sorted(ranks)
     assert list_commanders(ctx, EXPANDED, colors="BR")[0].colors in {"B", "R", "BR"}
@@ -149,7 +145,7 @@ def test_build_deck_structured_result(ctx):
     assert deck.size == 100
     assert result.validation_errors == []
     assert result.seed is None and result.variety == 0.0
-    assert result.match.unique_cards == 500
+    assert result.match.unique_cards == 291
     assert sum(1 for p in deck.cards if p.slot == DeckSlot.LAND) == 37
     assert codes(ctx) == [
         "catalog.loaded", "collection.matched", "commander.selected",
@@ -160,13 +156,13 @@ def test_build_deck_structured_result(ctx):
 
 
 def test_build_is_deterministic(settings):
-    a = build_deck(ServiceContext(settings=settings), BuildRequest(commander="Atarka, World Render"))
-    b = build_deck(ServiceContext(settings=settings), BuildRequest(commander="Atarka, World Render"))
+    a = build_deck(ServiceContext(settings=settings), BuildRequest(commander="Fixture Dragon Commander"))
+    b = build_deck(ServiceContext(settings=settings), BuildRequest(commander="Fixture Dragon Commander"))
     assert [p.card.name for p in a.deck.cards] == [p.card.name for p in b.deck.cards]
 
 
 def test_build_seed_reproducible(settings):
-    req = BuildRequest(commander="Kardur, Doomscourge", variety=0.8, seed=42)
+    req = BuildRequest(commander="Fixture Chaos Commander", variety=0.8, seed=42)
     a = build_deck(ServiceContext(settings=settings), req)
     b = build_deck(ServiceContext(settings=settings), req)
     assert a.seed == 42
@@ -178,11 +174,11 @@ def test_build_autopick_theme(ctx):
     assert result.autopick.commander_auto
     assert result.theme == "dragon"
     assert result.quota_changes["THREAT"] == (20, 28)
-    assert result.deck.commander.name in {"Drakuseth, Maw of Flames", "Verix Bladewing", "Atarka, World Render"}
+    assert result.deck.commander.name == "Fixture Dragon Commander"
 
 
 def test_build_budget_report(ctx):
-    result = build_deck(ctx, BuildRequest(commander="Atarka, World Render", budget=40))
+    result = build_deck(ctx, BuildRequest(commander="Fixture Dragon Commander", budget=40))
     assert result.budget is not None
     assert result.budget.met and result.budget.final_price <= 40
     assert result.budget.swaps > 0
@@ -191,7 +187,7 @@ def test_build_budget_report(ctx):
 def test_build_collection_text(settings):
     text = FIRST_FLIGHT.read_text()
     result = build_deck(ServiceContext(settings=settings),
-                        BuildRequest(commander="Isperia, Supreme Judge", collection_text=text))
+                        BuildRequest(commander="Fixture Flight Commander", collection_text=text))
     assert result.match.source == "<text>"
     assert result.deck.size == 100
 

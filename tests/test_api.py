@@ -18,7 +18,7 @@ from commanderai.services.library import save_build
 from commanderai.settings import Settings
 
 ROOT = Path(__file__).resolve().parent.parent
-SAMPLE = ROOT / "commanderai-sample"
+SAMPLE = ROOT / "tests/fixtures/integration/collections"
 EXPANDED = "builtin:expanded"
 
 
@@ -26,7 +26,7 @@ def make_settings(tmp_path) -> Settings:
     return Settings(
         decks_dir=tmp_path / "decks",
         default_collection=SAMPLE / "expanded-collection.txt",
-        cache_dir=ROOT / "offline-data",
+        cache_dir=ROOT / "tests/fixtures/integration/catalog",
         db_path=tmp_path / "api.db",
         offline=True,
     )
@@ -39,9 +39,7 @@ def settings(tmp_path) -> Settings:
 
 @pytest.fixture
 def client(settings):
-    if not settings.oracle_cards_path.exists() or not settings.default_collection.exists():
-        pytest.skip("optional full-catalog API fixtures are not installed; see docs/TESTING.md")
-    with TestClient(create_app(settings, web_dist=None)) as c:   # runs the startup hook
+    with TestClient(create_app(settings, web_dist=None, sample_dir=SAMPLE)) as c:   # runs the startup hook
         yield c
 
 
@@ -63,24 +61,20 @@ def build(client, **params) -> dict:
 
 def test_status(client):
     body = client.get("/api/status").json()
-    assert body["catalog"] == {"cards": 500, "snapshot": "2026-11-04T22:02:02.236+00:00"}
+    assert body["catalog"] == {"cards": 291, "snapshot": "2026-11-04T00:00:00+00:00"}
     assert body["offline"] is True
     assert body["database"] == {"decks": 0, "collections": 0}
     assert body["default_collection"] == EXPANDED
     assert body["migration"] == {"imported": 0, "failed": 0}
 
 
-@pytest.mark.skipif(
-    not (ROOT / "tests/golden/baseline/build-zaxara/decks/zaxara__the_exemplary.txt").exists(),
-    reason="optional golden deck fixture is not installed",
-)
 def test_startup_migrates_legacy_txt_decks(tmp_path):
     settings = make_settings(tmp_path)
     settings.decks_dir.mkdir(parents=True)
-    legacy = ROOT / "tests/golden/baseline/build-zaxara/decks/zaxara__the_exemplary.txt"
+    legacy = SAMPLE / "supplied-zaxara-decklist.txt"
     (settings.decks_dir / "old.txt").write_text(legacy.read_text())
     (settings.decks_dir / "junk.txt").write_text("not a deck\n")
-    with TestClient(create_app(settings, web_dist=None)) as c:
+    with TestClient(create_app(settings, web_dist=None, sample_dir=SAMPLE)) as c:
         status = c.get("/api/status").json()
         assert status["migration"] == {"imported": 1, "failed": 1}
         assert status["database"]["decks"] == 1
@@ -102,7 +96,7 @@ def test_card_detail_double_faced(client):
     r = client.get("/api/card", params={"name": "Invasion of Zendikar // Awakened Skyclave"})
     body = r.json()
     assert r.status_code == 200
-    assert body["images"]["front"].endswith("-front.jpg") and body["images"]["back"].endswith("-back.jpg")
+    assert body["images"]["front"].endswith("-front.svg") and body["images"]["back"].endswith("-back.svg")
     assert [f["name"] for f in body["faces"]] == ["Invasion of Zendikar", "Awakened Skyclave"]
     assert body["rarity"] == "uncommon" and body["set_name"]
 
@@ -123,7 +117,7 @@ def test_card_errors(client):
 def test_images_are_served_with_long_cache(client):
     url = client.get("/api/card", params={"name": "Sol Ring"}).json()["images"]["front"]
     r = client.get(url)
-    assert r.status_code == 200 and r.headers["content-type"] == "image/jpeg"
+    assert r.status_code == 200 and r.headers["content-type"] == "image/svg+xml"
     assert "immutable" in r.headers["cache-control"]
 
 
@@ -139,7 +133,7 @@ def test_collection_list(client):
     assert expanded == {
         "id": EXPANDED, "kind": "builtin", "name": "Expanded sample",
         "description": "Sample collection plus the five Starter Commander Decks",
-        "entries": 500, "copies": 796, "editable": False,
+        "entries": 291, "copies": 466, "editable": False,
     }
     ff = next(c for c in items if c["id"] == "builtin:precon:first-flight")
     assert ff["name"] == "Precon: First Flight" and ff["copies"] == 100
@@ -147,14 +141,14 @@ def test_collection_list(client):
 
 def test_collection_detail_and_cards(client):
     detail = client.get(f"/api/collections/{EXPANDED}").json()
-    assert detail["unique_cards"] == 500 and detail["commanders"] == 27
+    assert detail["unique_cards"] == 291 and detail["commanders"] == 16
     assert detail["match"]["unmatched"] == []
     cards = client.get(f"/api/collections/{EXPANDED}/cards").json()
-    assert len(cards) == 500
+    assert len(cards) == 291
     by_name = {c["name"]: c for c in cards}
     assert by_name["Sol Ring"]["quantity"] == 6
     assert by_name["Zaxara, the Exemplary"]["images"]["front"]
-    assert sum(c["quantity"] for c in cards) == 796
+    assert sum(c["quantity"] for c in cards) == 466
 
 
 def test_collection_not_found(client):
@@ -205,10 +199,10 @@ def test_upload_validation(client):
 
 def test_commanders(client):
     items = client.get("/api/commanders", params={"collection": EXPANDED}).json()
-    assert len(items) == 27
+    assert len(items) == 16
     assert items[0]["card"]["name"] == "Syr Konrad, the Grim"
     zaxara = next(c for c in items if c["card"]["name"] == "Zaxara, the Exemplary")
-    assert zaxara["colors"] == "UBG" and zaxara["support"] == 334 and zaxara["can_take_partner"] is False
+    assert zaxara["colors"] == "UBG" and zaxara["support"] == 284 and zaxara["can_take_partner"] is False
     simic = client.get("/api/commanders", params={"collection": EXPANDED, "colors": "simic"}).json()
     assert {c["colors"] for c in simic} <= {"U", "G", "UG", "C"}
     error(client.get("/api/commanders", params={"collection": EXPANDED, "colors": "purple"}), 400, "unknown_colors")
@@ -255,7 +249,7 @@ def test_build_preview(client):
 
 
 def test_build_is_reproducible_with_returned_seed(client):
-    first = build(client, commander="Kardur, Doomscourge", variety=0.8)
+    first = build(client, commander="Fixture Chaos Commander", variety=0.8)
     params = first["result"]["params"]
     assert isinstance(params["seed"], int)
     again = client.post("/api/builds", json=params).json()
@@ -285,7 +279,7 @@ def test_build_errors(client, params, status, code):
 
 def test_build_from_stored_collection(client):
     client.post("/api/collections", json={"name": "FF", "content": (SAMPLE / "precons/first-flight.txt").read_text()})
-    body = client.post("/api/builds", json={"collection": "stored:1", "commander": "Isperia, Supreme Judge"}).json()
+    body = client.post("/api/builds", json={"collection": "stored:1", "commander": "Fixture Flight Commander"}).json()
     assert body["result"]["report"]["match"]["source"] == "FF [stored:1]"
 
 
@@ -315,14 +309,14 @@ def test_save_expired_build(client):
 
 def test_deck_list_filters(client):
     save(client, build(client, commander="Zaxara, the Exemplary"))
-    save(client, build(client, commander="Atarka, World Render"), name="Dragons!")
+    save(client, build(client, commander="Fixture Dragon Commander"), name="Dragons!")
     save(client, build(client, commander="Zaxara, the Exemplary"), name="Hydras")
     body = client.get("/api/decks").json()
     assert body["total"] == 3 and [d["id"] for d in body["items"]] == [3, 2, 1]
     assert body["items"][0]["commander_image"].startswith("/api/images/")
     assert client.get("/api/decks", params={"commander": "Zaxara, the Exemplary"}).json()["total"] == 2
     assert [d["name"] for d in client.get("/api/decks", params={"q": "drag"}).json()["items"]] == ["Dragons!"]
-    assert client.get("/api/decks", params={"q": "atarka"}).json()["total"] == 1    # commander name
+    assert client.get("/api/decks", params={"q": "Fixture Dragon Commander"}).json()["total"] == 1    # commander name
     assert client.get("/api/decks", params={"q": "100%_"}).json()["total"] == 0     # wildcards are literal
     page = client.get("/api/decks", params={"limit": 1, "offset": 1}).json()
     assert page["total"] == 3 and [d["id"] for d in page["items"]] == [2]
@@ -340,14 +334,14 @@ def test_update_and_delete_deck(client):
 
 
 @pytest.mark.parametrize("fmt, media, first_line", [
-    ("text", "text/plain", "=== Commander: Emmara, Soul of the Accord ==="),
-    ("mtgo", "text/plain", "1 Emmara, Soul of the Accord"),
-    ("moxfield", "text/plain", "1 Emmara, Soul of the Accord *CMDR*"),
-    ("archidekt", "text/plain", "1 Emmara, Soul of the Accord [Commander]"),
+    ("text", "text/plain", "=== Commander: Fixture Token Commander ==="),
+    ("mtgo", "text/plain", "1 Fixture Token Commander"),
+    ("moxfield", "text/plain", "1 Fixture Token Commander *CMDR*"),
+    ("archidekt", "text/plain", "1 Fixture Token Commander [Commander]"),
     ("json", "application/json", "{"),
 ])
 def test_export(client, fmt, media, first_line):
-    save(client, build(client, commander="Emmara, Soul of the Accord"), name="Émmara tokens")
+    save(client, build(client, commander="Fixture Token Commander"), name="Émmara tokens")
     r = client.get("/api/decks/1/export", params={"format": fmt})
     assert r.status_code == 200 and r.headers["content-type"].startswith(media)
     assert r.text.splitlines()[0] == first_line
@@ -363,7 +357,7 @@ def test_export_errors(client):
 
 
 def test_json_export_import_roundtrip(client):
-    original = save(client, build(client, commander="Atarka, World Render", budget=50))
+    original = save(client, build(client, commander="Fixture Dragon Commander", budget=50))
     exported = client.get("/api/decks/1/export", params={"format": "json"}).text
     r = client.post("/api/decks/import", json={"content": exported, "name": "Copy"})
     assert r.status_code == 201
@@ -374,7 +368,7 @@ def test_json_export_import_roundtrip(client):
 
 def test_text_import(client):
     r = client.post("/api/decks/import", json={
-        "content": "1 Isperia, Supreme Judge\n1 Sol Ring\n1 Not A Real Card\n97 Island\n", "filename": "isperia.txt"})
+        "content": "1 Fixture Flight Commander\n1 Sol Ring\n1 Not A Real Card\n97 Island\n", "filename": "isperia.txt"})
     body = r.json()
     assert r.status_code == 201 and body["unknown_cards"] == ["Not A Real Card"]
     assert body["deck"]["name"] == "isperia" and body["deck"]["stats"]["card_count"] == 99
@@ -386,7 +380,7 @@ def test_text_import(client):
 def test_cli_built_deck_can_be_rebuilt_from_the_ui(client, settings):
     ctx = ServiceContext(settings=settings)
     result = build_deck(ctx, BuildRequest(collection=SAMPLE / "expanded-collection.txt",
-                                          commander="Kardur, Doomscourge", seed=3))
+                                          commander="Fixture Chaos Commander", seed=3))
     path = settings.decks_dir / "kardur.txt"
     settings.decks_dir.mkdir(parents=True, exist_ok=True)
     path.write_text(render_deck(result.deck))
@@ -394,7 +388,7 @@ def test_cli_built_deck_can_be_rebuilt_from_the_ui(client, settings):
     deck = client.get("/api/decks/1").json()
     assert deck["source"] == "cli"
     assert deck["params"] == {
-        "collection": EXPANDED, "commander": "Kardur, Doomscourge", "partner": None, "theme": None,
+        "collection": EXPANDED, "commander": "Fixture Chaos Commander", "partner": None, "theme": None,
         "colors": None, "lands": 37, "variety": 0.0, "seed": 3, "budget": None, "bracket": None,
     }
     rebuilt = client.post("/api/builds", json=deck["params"]).json()["result"]["deck"]
@@ -413,7 +407,7 @@ def test_spa_fallback(tmp_path):
     (dist / "assets").mkdir(parents=True)
     (dist / "index.html").write_text("<html>app</html>")
     (dist / "robots.txt").write_text("ok")
-    with TestClient(create_app(make_settings(tmp_path), web_dist=dist)) as c:
+    with TestClient(create_app(make_settings(tmp_path), web_dist=dist, sample_dir=SAMPLE)) as c:
         assert c.get("/decks/3").text == "<html>app</html>"            # client route
         assert c.get("/robots.txt").text == "ok"                       # real file
         assert c.get("/../../etc/passwd").text == "<html>app</html>"   # no traversal

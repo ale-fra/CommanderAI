@@ -1,0 +1,1462 @@
+[
+  {
+    "name": "Utopia Sprawl",
+    "face_index": 0,
+    "local_path": "images/card-000-front.svg"
+  },
+  {
+    "name": "Benevolent Hydra",
+    "face_index": 0,
+    "local_path": "images/card-001-front.svg"
+  },
+  {
+    "name": "Ponder",
+    "face_index": 0,
+    "local_path": "images/card-002-front.svg"
+  },
+  {
+    "name": "Reclamation Sage",
+    "face_index": 0,
+    "local_path": "images/card-003-front.svg"
+  },
+  {
+    "name": "Zegana, Utopian Speaker",
+    "face_index": 0,
+    "local_path": "images/card-004-front.svg"
+  },
+  {
+    "name": "Pongify",
+    "face_index": 0,
+    "local_path": "images/card-005-front.svg"
+  },
+  {
+    "name": "Mirkwood Bats",
+    "face_index": 0,
+    "local_path": "images/card-006-front.svg"
+  },
+  {
+    "name": "Rapid Hybridization",
+    "face_index": 0,
+    "local_path": "images/card-007-front.svg"
+  },
+  {
+    "name": "Tatyova, Benthic Druid",
+    "face_index": 0,
+    "local_path": "images/card-008-front.svg"
+  },
+  {
+    "name": "Command Tower",
+    "face_index": 0,
+    "local_path": "images/card-009-front.svg"
+  },
+  {
+    "name": "Windfall",
+    "face_index": 0,
+    "local_path": "images/card-010-front.svg"
+  },
+  {
+    "name": "Everflowing Chalice",
+    "face_index": 0,
+    "local_path": "images/card-011-front.svg"
+  },
+  {
+    "name": "Commander's Sphere",
+    "face_index": 0,
+    "local_path": "images/card-012-front.svg"
+  },
+  {
+    "name": "Arcane Signet",
+    "face_index": 0,
+    "local_path": "images/card-013-front.svg"
+  },
+  {
+    "name": "Fabled Passage",
+    "face_index": 0,
+    "local_path": "images/card-014-front.svg"
+  },
+  {
+    "name": "Sensei's Divining Top",
+    "face_index": 0,
+    "local_path": "images/card-015-front.svg"
+  },
+  {
+    "name": "Warden of the Grove",
+    "face_index": 0,
+    "local_path": "images/card-016-front.svg"
+  },
+  {
+    "name": "Diabolic Tutor",
+    "face_index": 0,
+    "local_path": "images/card-017-front.svg"
+  },
+  {
+    "name": "Syr Konrad, the Grim",
+    "face_index": 0,
+    "local_path": "images/card-018-front.svg"
+  },
+  {
+    "name": "Kodama's Reach",
+    "face_index": 0,
+    "local_path": "images/card-019-front.svg"
+  },
+  {
+    "name": "Frantic Search",
+    "face_index": 0,
+    "local_path": "images/card-020-front.svg"
+  },
+  {
+    "name": "Foundry Inspector",
+    "face_index": 0,
+    "local_path": "images/card-021-front.svg"
+  },
+  {
+    "name": "Mental Misstep",
+    "face_index": 0,
+    "local_path": "images/card-022-front.svg"
+  },
+  {
+    "name": "Three Visits",
+    "face_index": 0,
+    "local_path": "images/card-023-front.svg"
+  },
+  {
+    "name": "Primordial Hydra",
+    "face_index": 0,
+    "local_path": "images/card-024-front.svg"
+  },
+  {
+    "name": "Circle of Dreams Druid",
+    "face_index": 0,
+    "local_path": "images/card-025-front.svg"
+  },
+  {
+    "name": "Selvala, Heart of the Wilds",
+    "face_index": 0,
+    "local_path": "images/card-026-front.svg"
+  },
+  {
+    "name": "Snakeskin Veil",
+    "face_index": 0,
+    "local_path": "images/card-027-front.svg"
+  },
+  {
+    "name": "An Offer You Can't Refuse",
+    "face_index": 0,
+    "local_path": "images/card-028-front.svg"
+  },
+  {
+    "name": "Victimize",
+    "face_index": 0,
+    "local_path": "images/card-029-front.svg"
+  },
+  {
+    "name": "Heroic Intervention",
+    "face_index": 0,
+    "local_path": "images/card-030-front.svg"
+  },
+  {
+    "name": "Crop Rotation",
+    "face_index": 0,
+    "local_path": "images/card-031-front.svg"
+  },
+  {
+    "name": "Branching Evolution",
+    "face_index": 0,
+    "local_path": "images/card-032-front.svg"
+  },
+  {
+    "name": "Spelunking",
+    "face_index": 0,
+    "local_path": "images/card-033-front.svg"
+  },
+  {
+    "name": "Mutational Advantage",
+    "face_index": 0,
+    "local_path": "images/card-034-front.svg"
+  },
+  {
+    "name": "Forgotten Ancient",
+    "face_index": 0,
+    "local_path": "images/card-035-front.svg"
+  },
+  {
+    "name": "Go for the Throat",
+    "face_index": 0,
+    "local_path": "images/card-036-front.svg"
+  },
+  {
+    "name": "Contentious Plan",
+    "face_index": 0,
+    "local_path": "images/card-037-front.svg"
+  },
+  {
+    "name": "Eternal Witness",
+    "face_index": 0,
+    "local_path": "images/card-038-front.svg"
+  },
+  {
+    "name": "Blood Artist",
+    "face_index": 0,
+    "local_path": "images/card-039-front.svg"
+  },
+  {
+    "name": "Garruk's Uprising",
+    "face_index": 0,
+    "local_path": "images/card-040-front.svg"
+  },
+  {
+    "name": "Wayfarer's Bauble",
+    "face_index": 0,
+    "local_path": "images/card-041-front.svg"
+  },
+  {
+    "name": "Llanowar Wastes",
+    "face_index": 0,
+    "local_path": "images/card-042-front.svg"
+  },
+  {
+    "name": "Morbid Opportunist",
+    "face_index": 0,
+    "local_path": "images/card-043-front.svg"
+  },
+  {
+    "name": "Lotus Petal",
+    "face_index": 0,
+    "local_path": "images/card-044-front.svg"
+  },
+  {
+    "name": "Negate",
+    "face_index": 0,
+    "local_path": "images/card-045-front.svg"
+  },
+  {
+    "name": "Inga and Esika",
+    "face_index": 0,
+    "local_path": "images/card-046-front.svg"
+  },
+  {
+    "name": "Incubation Druid",
+    "face_index": 0,
+    "local_path": "images/card-047-front.svg"
+  },
+  {
+    "name": "Growth Spiral",
+    "face_index": 0,
+    "local_path": "images/card-048-front.svg"
+  },
+  {
+    "name": "Village Rites",
+    "face_index": 0,
+    "local_path": "images/card-049-front.svg"
+  },
+  {
+    "name": "Herald of Secret Streams",
+    "face_index": 0,
+    "local_path": "images/card-050-front.svg"
+  },
+  {
+    "name": "Brainstorm",
+    "face_index": 0,
+    "local_path": "images/card-051-front.svg"
+  },
+  {
+    "name": "Baleful Strix",
+    "face_index": 0,
+    "local_path": "images/card-052-front.svg"
+  },
+  {
+    "name": "Skyshroud Claim",
+    "face_index": 0,
+    "local_path": "images/card-053-front.svg"
+  },
+  {
+    "name": "Gargos, Vicious Watcher",
+    "face_index": 0,
+    "local_path": "images/card-054-front.svg"
+  },
+  {
+    "name": "Gray Merchant of Asphodel",
+    "face_index": 0,
+    "local_path": "images/card-055-front.svg"
+  },
+  {
+    "name": "Ornithopter of Paradise",
+    "face_index": 0,
+    "local_path": "images/card-056-front.svg"
+  },
+  {
+    "name": "Viral Drake",
+    "face_index": 0,
+    "local_path": "images/card-057-front.svg"
+  },
+  {
+    "name": "Bender's Waterskin",
+    "face_index": 0,
+    "local_path": "images/card-058-front.svg"
+  },
+  {
+    "name": "Treasure Vault",
+    "face_index": 0,
+    "local_path": "images/card-059-front.svg"
+  },
+  {
+    "name": "Elvish Mystic",
+    "face_index": 0,
+    "local_path": "images/card-060-front.svg"
+  },
+  {
+    "name": "Yavimaya Coast",
+    "face_index": 0,
+    "local_path": "images/card-061-front.svg"
+  },
+  {
+    "name": "Inexorable Tide",
+    "face_index": 0,
+    "local_path": "images/card-062-front.svg"
+  },
+  {
+    "name": "Fabricate",
+    "face_index": 0,
+    "local_path": "images/card-063-front.svg"
+  },
+  {
+    "name": "Talisman of Resilience",
+    "face_index": 0,
+    "local_path": "images/card-064-front.svg"
+  },
+  {
+    "name": "Genesis Hydra",
+    "face_index": 0,
+    "local_path": "images/card-065-front.svg"
+  },
+  {
+    "name": "Simic Signet",
+    "face_index": 0,
+    "local_path": "images/card-066-front.svg"
+  },
+  {
+    "name": "Deadly Dispute",
+    "face_index": 0,
+    "local_path": "images/card-067-front.svg"
+  },
+  {
+    "name": "Tekuthal, Inquiry Dominus",
+    "face_index": 0,
+    "local_path": "images/card-068-front.svg"
+  },
+  {
+    "name": "Farseek",
+    "face_index": 0,
+    "local_path": "images/card-069-front.svg"
+  },
+  {
+    "name": "Skatewing Spy",
+    "face_index": 0,
+    "local_path": "images/card-070-front.svg"
+  },
+  {
+    "name": "Invasion of Zendikar // Awakened Skyclave",
+    "face_index": 0,
+    "local_path": "images/card-071-front.svg"
+  },
+  {
+    "name": "Invasion of Zendikar // Awakened Skyclave",
+    "face_index": 1,
+    "local_path": "images/card-071-back.svg"
+  },
+  {
+    "name": "Atomize",
+    "face_index": 0,
+    "local_path": "images/card-072-front.svg"
+  },
+  {
+    "name": "Talisman of Dominance",
+    "face_index": 0,
+    "local_path": "images/card-073-front.svg"
+  },
+  {
+    "name": "Consider",
+    "face_index": 0,
+    "local_path": "images/card-074-front.svg"
+  },
+  {
+    "name": "Ashnod's Altar",
+    "face_index": 0,
+    "local_path": "images/card-075-front.svg"
+  },
+  {
+    "name": "Nyxborn Hydra",
+    "face_index": 0,
+    "local_path": "images/card-076-front.svg"
+  },
+  {
+    "name": "Unbound Flourishing",
+    "face_index": 0,
+    "local_path": "images/card-077-front.svg"
+  },
+  {
+    "name": "Patchwork Banner",
+    "face_index": 0,
+    "local_path": "images/card-078-front.svg"
+  },
+  {
+    "name": "Rhystic Study",
+    "face_index": 0,
+    "local_path": "images/card-079-front.svg"
+  },
+  {
+    "name": "Dark Ritual",
+    "face_index": 0,
+    "local_path": "images/card-080-front.svg"
+  },
+  {
+    "name": "The Mimeoplasm",
+    "face_index": 0,
+    "local_path": "images/card-081-front.svg"
+  },
+  {
+    "name": "Curse of the Swine",
+    "face_index": 0,
+    "local_path": "images/card-082-front.svg"
+  },
+  {
+    "name": "Swamp",
+    "face_index": 0,
+    "local_path": "images/card-083-front.svg"
+  },
+  {
+    "name": "Simic Ascendancy",
+    "face_index": 0,
+    "local_path": "images/card-084-front.svg"
+  },
+  {
+    "name": "Feed the Swarm",
+    "face_index": 0,
+    "local_path": "images/card-085-front.svg"
+  },
+  {
+    "name": "Unclaimed Territory",
+    "face_index": 0,
+    "local_path": "images/card-086-front.svg"
+  },
+  {
+    "name": "Overflowing Basin",
+    "face_index": 0,
+    "local_path": "images/card-087-front.svg"
+  },
+  {
+    "name": "Cabal Ritual",
+    "face_index": 0,
+    "local_path": "images/card-088-front.svg"
+  },
+  {
+    "name": "Read the Bones",
+    "face_index": 0,
+    "local_path": "images/card-089-front.svg"
+  },
+  {
+    "name": "Culling the Weak",
+    "face_index": 0,
+    "local_path": "images/card-090-front.svg"
+  },
+  {
+    "name": "Skullclamp",
+    "face_index": 0,
+    "local_path": "images/card-091-front.svg"
+  },
+  {
+    "name": "Llanowar Elves",
+    "face_index": 0,
+    "local_path": "images/card-092-front.svg"
+  },
+  {
+    "name": "Sol Ring",
+    "face_index": 0,
+    "local_path": "images/card-093-front.svg"
+  },
+  {
+    "name": "Viridescent Bog",
+    "face_index": 0,
+    "local_path": "images/card-094-front.svg"
+  },
+  {
+    "name": "Hydroid Krasis",
+    "face_index": 0,
+    "local_path": "images/card-095-front.svg"
+  },
+  {
+    "name": "Nature's Claim",
+    "face_index": 0,
+    "local_path": "images/card-096-front.svg"
+  },
+  {
+    "name": "Elementalist's Palette",
+    "face_index": 0,
+    "local_path": "images/card-097-front.svg"
+  },
+  {
+    "name": "Scorched Ruins",
+    "face_index": 0,
+    "local_path": "images/card-098-front.svg"
+  },
+  {
+    "name": "Harrow",
+    "face_index": 0,
+    "local_path": "images/card-099-front.svg"
+  },
+  {
+    "name": "Wild Growth",
+    "face_index": 0,
+    "local_path": "images/card-100-front.svg"
+  },
+  {
+    "name": "Reality Shift",
+    "face_index": 0,
+    "local_path": "images/card-101-front.svg"
+  },
+  {
+    "name": "Opt",
+    "face_index": 0,
+    "local_path": "images/card-102-front.svg"
+  },
+  {
+    "name": "Sanguine Bond",
+    "face_index": 0,
+    "local_path": "images/card-103-front.svg"
+  },
+  {
+    "name": "Entish Restoration",
+    "face_index": 0,
+    "local_path": "images/card-104-front.svg"
+  },
+  {
+    "name": "Mana Drain",
+    "face_index": 0,
+    "local_path": "images/card-105-front.svg"
+  },
+  {
+    "name": "Necroblossom Snarl",
+    "face_index": 0,
+    "local_path": "images/card-106-front.svg"
+  },
+  {
+    "name": "Zulaport Cutthroat",
+    "face_index": 0,
+    "local_path": "images/card-107-front.svg"
+  },
+  {
+    "name": "Beast Within",
+    "face_index": 0,
+    "local_path": "images/card-108-front.svg"
+  },
+  {
+    "name": "Nature's Lore",
+    "face_index": 0,
+    "local_path": "images/card-109-front.svg"
+  },
+  {
+    "name": "Fanatic of Rhonas",
+    "face_index": 0,
+    "local_path": "images/card-110-front.svg"
+  },
+  {
+    "name": "Secluded Courtyard",
+    "face_index": 0,
+    "local_path": "images/card-111-front.svg"
+  },
+  {
+    "name": "Aetherize",
+    "face_index": 0,
+    "local_path": "images/card-112-front.svg"
+  },
+  {
+    "name": "Dimir Signet",
+    "face_index": 0,
+    "local_path": "images/card-113-front.svg"
+  },
+  {
+    "name": "Harmonize",
+    "face_index": 0,
+    "local_path": "images/card-114-front.svg"
+  },
+  {
+    "name": "Vastwood Hydra",
+    "face_index": 0,
+    "local_path": "images/card-115-front.svg"
+  },
+  {
+    "name": "Night's Whisper",
+    "face_index": 0,
+    "local_path": "images/card-116-front.svg"
+  },
+  {
+    "name": "Exsanguinate",
+    "face_index": 0,
+    "local_path": "images/card-117-front.svg"
+  },
+  {
+    "name": "Demonic Tutor",
+    "face_index": 0,
+    "local_path": "images/card-118-front.svg"
+  },
+  {
+    "name": "Buried Alive",
+    "face_index": 0,
+    "local_path": "images/card-119-front.svg"
+  },
+  {
+    "name": "Flux Channeler",
+    "face_index": 0,
+    "local_path": "images/card-120-front.svg"
+  },
+  {
+    "name": "Rampant Growth",
+    "face_index": 0,
+    "local_path": "images/card-121-front.svg"
+  },
+  {
+    "name": "Burnished Hart",
+    "face_index": 0,
+    "local_path": "images/card-122-front.svg"
+  },
+  {
+    "name": "Mystic Remora",
+    "face_index": 0,
+    "local_path": "images/card-123-front.svg"
+  },
+  {
+    "name": "Decanter of Endless Water",
+    "face_index": 0,
+    "local_path": "images/card-124-front.svg"
+  },
+  {
+    "name": "Cultivate",
+    "face_index": 0,
+    "local_path": "images/card-125-front.svg"
+  },
+  {
+    "name": "Talisman of Curiosity",
+    "face_index": 0,
+    "local_path": "images/card-126-front.svg"
+  },
+  {
+    "name": "Expedition Map",
+    "face_index": 0,
+    "local_path": "images/card-127-front.svg"
+  },
+  {
+    "name": "Sylvan Library",
+    "face_index": 0,
+    "local_path": "images/card-128-front.svg"
+  },
+  {
+    "name": "Infernal Grasp",
+    "face_index": 0,
+    "local_path": "images/card-129-front.svg"
+  },
+  {
+    "name": "Fellwar Stone",
+    "face_index": 0,
+    "local_path": "images/card-130-front.svg"
+  },
+  {
+    "name": "Force of Will",
+    "face_index": 0,
+    "local_path": "images/card-131-front.svg"
+  },
+  {
+    "name": "Etherium Sculptor",
+    "face_index": 0,
+    "local_path": "images/card-132-front.svg"
+  },
+  {
+    "name": "Overgrown Tomb",
+    "face_index": 0,
+    "local_path": "images/card-133-front.svg"
+  },
+  {
+    "name": "Thought Vessel",
+    "face_index": 0,
+    "local_path": "images/card-134-front.svg"
+  },
+  {
+    "name": "Whispersilk Cloak",
+    "face_index": 0,
+    "local_path": "images/card-135-front.svg"
+  },
+  {
+    "name": "Putrefy",
+    "face_index": 0,
+    "local_path": "images/card-136-front.svg"
+  },
+  {
+    "name": "Inspiring Call",
+    "face_index": 0,
+    "local_path": "images/card-137-front.svg"
+  },
+  {
+    "name": "Hydra Broodmaster",
+    "face_index": 0,
+    "local_path": "images/card-138-front.svg"
+  },
+  {
+    "name": "Karn's Bastion",
+    "face_index": 0,
+    "local_path": "images/card-139-front.svg"
+  },
+  {
+    "name": "Reanimate",
+    "face_index": 0,
+    "local_path": "images/card-140-front.svg"
+  },
+  {
+    "name": "Hardened Scales",
+    "face_index": 0,
+    "local_path": "images/card-141-front.svg"
+  },
+  {
+    "name": "Wren's Run Hydra",
+    "face_index": 0,
+    "local_path": "images/card-142-front.svg"
+  },
+  {
+    "name": "Thran Dynamo",
+    "face_index": 0,
+    "local_path": "images/card-143-front.svg"
+  },
+  {
+    "name": "Pitiless Plunderer",
+    "face_index": 0,
+    "local_path": "images/card-144-front.svg"
+  },
+  {
+    "name": "Zaxara, the Exemplary",
+    "face_index": 0,
+    "local_path": "images/card-145-front.svg"
+  },
+  {
+    "name": "Arcane Denial",
+    "face_index": 0,
+    "local_path": "images/card-146-front.svg"
+  },
+  {
+    "name": "Tireless Provisioner",
+    "face_index": 0,
+    "local_path": "images/card-147-front.svg"
+  },
+  {
+    "name": "Preordain",
+    "face_index": 0,
+    "local_path": "images/card-148-front.svg"
+  },
+  {
+    "name": "Snap",
+    "face_index": 0,
+    "local_path": "images/card-149-front.svg"
+  },
+  {
+    "name": "Island",
+    "face_index": 0,
+    "local_path": "images/card-150-front.svg"
+  },
+  {
+    "name": "Tezzeret's Gambit",
+    "face_index": 0,
+    "local_path": "images/card-151-front.svg"
+  },
+  {
+    "name": "Forest",
+    "face_index": 0,
+    "local_path": "images/card-152-front.svg"
+  },
+  {
+    "name": "Managorger Hydra",
+    "face_index": 0,
+    "local_path": "images/card-153-front.svg"
+  },
+  {
+    "name": "Evolution Sage",
+    "face_index": 0,
+    "local_path": "images/card-154-front.svg"
+  },
+  {
+    "name": "Path of Ancestry",
+    "face_index": 0,
+    "local_path": "images/card-155-front.svg"
+  },
+  {
+    "name": "Apex Devastator",
+    "face_index": 0,
+    "local_path": "images/card-156-front.svg"
+  },
+  {
+    "name": "Liquimetal Torque",
+    "face_index": 0,
+    "local_path": "images/card-157-front.svg"
+  },
+  {
+    "name": "Explore",
+    "face_index": 0,
+    "local_path": "images/card-158-front.svg"
+  },
+  {
+    "name": "Tamiyo's Safekeeping",
+    "face_index": 0,
+    "local_path": "images/card-159-front.svg"
+  },
+  {
+    "name": "Foreboding Landscape",
+    "face_index": 0,
+    "local_path": "images/card-160-front.svg"
+  },
+  {
+    "name": "Herald's Horn",
+    "face_index": 0,
+    "local_path": "images/card-161-front.svg"
+  },
+  {
+    "name": "Animate Dead",
+    "face_index": 0,
+    "local_path": "images/card-162-front.svg"
+  },
+  {
+    "name": "Idol of Oblivion",
+    "face_index": 0,
+    "local_path": "images/card-163-front.svg"
+  },
+  {
+    "name": "Sign in Blood",
+    "face_index": 0,
+    "local_path": "images/card-164-front.svg"
+  },
+  {
+    "name": "Bastion of Remembrance",
+    "face_index": 0,
+    "local_path": "images/card-165-front.svg"
+  },
+  {
+    "name": "Swiftfoot Boots",
+    "face_index": 0,
+    "local_path": "images/card-166-front.svg"
+  },
+  {
+    "name": "Mind Stone",
+    "face_index": 0,
+    "local_path": "images/card-167-front.svg"
+  },
+  {
+    "name": "Smell Fear",
+    "face_index": 0,
+    "local_path": "images/card-168-front.svg"
+  },
+  {
+    "name": "Woodland Cemetery",
+    "face_index": 0,
+    "local_path": "images/card-169-front.svg"
+  },
+  {
+    "name": "Lightning Greaves",
+    "face_index": 0,
+    "local_path": "images/card-170-front.svg"
+  },
+  {
+    "name": "Counterspell",
+    "face_index": 0,
+    "local_path": "images/card-171-front.svg"
+  },
+  {
+    "name": "Ezuri, Stalker of Spheres",
+    "face_index": 0,
+    "local_path": "images/card-172-front.svg"
+  },
+  {
+    "name": "Hungering Hydra",
+    "face_index": 0,
+    "local_path": "images/card-173-front.svg"
+  },
+  {
+    "name": "Clamavus",
+    "face_index": 0,
+    "local_path": "images/card-174-front.svg"
+  },
+  {
+    "name": "Accursed Marauder",
+    "face_index": 0,
+    "local_path": "images/card-175-front.svg"
+  },
+  {
+    "name": "Twilight Mire",
+    "face_index": 0,
+    "local_path": "images/card-176-front.svg"
+  },
+  {
+    "name": "Flooded Grove",
+    "face_index": 0,
+    "local_path": "images/card-177-front.svg"
+  },
+  {
+    "name": "Deepglow Skate",
+    "face_index": 0,
+    "local_path": "images/card-178-front.svg"
+  },
+  {
+    "name": "Fyndhorn Elves",
+    "face_index": 0,
+    "local_path": "images/card-179-front.svg"
+  },
+  {
+    "name": "Gyre Sage",
+    "face_index": 0,
+    "local_path": "images/card-180-front.svg"
+  },
+  {
+    "name": "Sakura-Tribe Elder",
+    "face_index": 0,
+    "local_path": "images/card-181-front.svg"
+  },
+  {
+    "name": "Muldrotha, the Gravetide",
+    "face_index": 0,
+    "local_path": "images/card-182-front.svg"
+  },
+  {
+    "name": "Drown in Ichor",
+    "face_index": 0,
+    "local_path": "images/card-183-front.svg"
+  },
+  {
+    "name": "Worldly Tutor",
+    "face_index": 0,
+    "local_path": "images/card-184-front.svg"
+  },
+  {
+    "name": "Propaganda",
+    "face_index": 0,
+    "local_path": "images/card-185-front.svg"
+  },
+  {
+    "name": "Kami of Whispered Hopes",
+    "face_index": 0,
+    "local_path": "images/card-186-front.svg"
+  },
+  {
+    "name": "Somberwald Sage",
+    "face_index": 0,
+    "local_path": "images/card-187-front.svg"
+  },
+  {
+    "name": "Viscera Seer",
+    "face_index": 0,
+    "local_path": "images/card-188-front.svg"
+  },
+  {
+    "name": "Opulent Palace",
+    "face_index": 0,
+    "local_path": "images/card-189-front.svg"
+  },
+  {
+    "name": "Hinterland Harbor",
+    "face_index": 0,
+    "local_path": "images/card-190-front.svg"
+  },
+  {
+    "name": "Mystical Tutor",
+    "face_index": 0,
+    "local_path": "images/card-191-front.svg"
+  },
+  {
+    "name": "Voracious Hydra",
+    "face_index": 0,
+    "local_path": "images/card-192-front.svg"
+  },
+  {
+    "name": "Withering Torment",
+    "face_index": 0,
+    "local_path": "images/card-193-front.svg"
+  },
+  {
+    "name": "Fixture Flight Commander",
+    "face_index": 0,
+    "local_path": "images/card-194-front.svg"
+  },
+  {
+    "name": "Fixture Zombie Commander",
+    "face_index": 0,
+    "local_path": "images/card-195-front.svg"
+  },
+  {
+    "name": "Fixture Chaos Commander",
+    "face_index": 0,
+    "local_path": "images/card-196-front.svg"
+  },
+  {
+    "name": "Fixture Dragon Commander",
+    "face_index": 0,
+    "local_path": "images/card-197-front.svg"
+  },
+  {
+    "name": "Fixture Token Commander",
+    "face_index": 0,
+    "local_path": "images/card-198-front.svg"
+  },
+  {
+    "name": "Fixture Ramp A",
+    "face_index": 0,
+    "local_path": "images/card-199-front.svg"
+  },
+  {
+    "name": "Fixture Ramp B",
+    "face_index": 0,
+    "local_path": "images/card-200-front.svg"
+  },
+  {
+    "name": "Fixture Ramp C",
+    "face_index": 0,
+    "local_path": "images/card-201-front.svg"
+  },
+  {
+    "name": "Fixture Ramp D",
+    "face_index": 0,
+    "local_path": "images/card-202-front.svg"
+  },
+  {
+    "name": "Fixture Ramp E",
+    "face_index": 0,
+    "local_path": "images/card-203-front.svg"
+  },
+  {
+    "name": "Fixture Ramp F",
+    "face_index": 0,
+    "local_path": "images/card-204-front.svg"
+  },
+  {
+    "name": "Fixture Ramp G",
+    "face_index": 0,
+    "local_path": "images/card-205-front.svg"
+  },
+  {
+    "name": "Fixture Ramp H",
+    "face_index": 0,
+    "local_path": "images/card-206-front.svg"
+  },
+  {
+    "name": "Fixture Ramp I",
+    "face_index": 0,
+    "local_path": "images/card-207-front.svg"
+  },
+  {
+    "name": "Fixture Ramp J",
+    "face_index": 0,
+    "local_path": "images/card-208-front.svg"
+  },
+  {
+    "name": "Fixture Ramp K",
+    "face_index": 0,
+    "local_path": "images/card-209-front.svg"
+  },
+  {
+    "name": "Fixture Ramp L",
+    "face_index": 0,
+    "local_path": "images/card-210-front.svg"
+  },
+  {
+    "name": "Fixture Ramp M",
+    "face_index": 0,
+    "local_path": "images/card-211-front.svg"
+  },
+  {
+    "name": "Fixture Ramp N",
+    "face_index": 0,
+    "local_path": "images/card-212-front.svg"
+  },
+  {
+    "name": "Fixture Ramp O",
+    "face_index": 0,
+    "local_path": "images/card-213-front.svg"
+  },
+  {
+    "name": "Fixture Draw A",
+    "face_index": 0,
+    "local_path": "images/card-214-front.svg"
+  },
+  {
+    "name": "Fixture Draw B",
+    "face_index": 0,
+    "local_path": "images/card-215-front.svg"
+  },
+  {
+    "name": "Fixture Draw C",
+    "face_index": 0,
+    "local_path": "images/card-216-front.svg"
+  },
+  {
+    "name": "Fixture Draw D",
+    "face_index": 0,
+    "local_path": "images/card-217-front.svg"
+  },
+  {
+    "name": "Fixture Draw E",
+    "face_index": 0,
+    "local_path": "images/card-218-front.svg"
+  },
+  {
+    "name": "Fixture Draw F",
+    "face_index": 0,
+    "local_path": "images/card-219-front.svg"
+  },
+  {
+    "name": "Fixture Draw G",
+    "face_index": 0,
+    "local_path": "images/card-220-front.svg"
+  },
+  {
+    "name": "Fixture Draw H",
+    "face_index": 0,
+    "local_path": "images/card-221-front.svg"
+  },
+  {
+    "name": "Fixture Draw I",
+    "face_index": 0,
+    "local_path": "images/card-222-front.svg"
+  },
+  {
+    "name": "Fixture Draw J",
+    "face_index": 0,
+    "local_path": "images/card-223-front.svg"
+  },
+  {
+    "name": "Fixture Draw K",
+    "face_index": 0,
+    "local_path": "images/card-224-front.svg"
+  },
+  {
+    "name": "Fixture Draw L",
+    "face_index": 0,
+    "local_path": "images/card-225-front.svg"
+  },
+  {
+    "name": "Fixture Draw M",
+    "face_index": 0,
+    "local_path": "images/card-226-front.svg"
+  },
+  {
+    "name": "Fixture Draw N",
+    "face_index": 0,
+    "local_path": "images/card-227-front.svg"
+  },
+  {
+    "name": "Fixture Draw O",
+    "face_index": 0,
+    "local_path": "images/card-228-front.svg"
+  },
+  {
+    "name": "Fixture Removal A",
+    "face_index": 0,
+    "local_path": "images/card-229-front.svg"
+  },
+  {
+    "name": "Fixture Removal B",
+    "face_index": 0,
+    "local_path": "images/card-230-front.svg"
+  },
+  {
+    "name": "Fixture Removal C",
+    "face_index": 0,
+    "local_path": "images/card-231-front.svg"
+  },
+  {
+    "name": "Fixture Removal D",
+    "face_index": 0,
+    "local_path": "images/card-232-front.svg"
+  },
+  {
+    "name": "Fixture Removal E",
+    "face_index": 0,
+    "local_path": "images/card-233-front.svg"
+  },
+  {
+    "name": "Fixture Removal F",
+    "face_index": 0,
+    "local_path": "images/card-234-front.svg"
+  },
+  {
+    "name": "Fixture Removal G",
+    "face_index": 0,
+    "local_path": "images/card-235-front.svg"
+  },
+  {
+    "name": "Fixture Removal H",
+    "face_index": 0,
+    "local_path": "images/card-236-front.svg"
+  },
+  {
+    "name": "Fixture Removal I",
+    "face_index": 0,
+    "local_path": "images/card-237-front.svg"
+  },
+  {
+    "name": "Fixture Removal J",
+    "face_index": 0,
+    "local_path": "images/card-238-front.svg"
+  },
+  {
+    "name": "Fixture Removal K",
+    "face_index": 0,
+    "local_path": "images/card-239-front.svg"
+  },
+  {
+    "name": "Fixture Removal L",
+    "face_index": 0,
+    "local_path": "images/card-240-front.svg"
+  },
+  {
+    "name": "Fixture Removal M",
+    "face_index": 0,
+    "local_path": "images/card-241-front.svg"
+  },
+  {
+    "name": "Fixture Removal N",
+    "face_index": 0,
+    "local_path": "images/card-242-front.svg"
+  },
+  {
+    "name": "Fixture Removal O",
+    "face_index": 0,
+    "local_path": "images/card-243-front.svg"
+  },
+  {
+    "name": "Fixture Wipe A",
+    "face_index": 0,
+    "local_path": "images/card-244-front.svg"
+  },
+  {
+    "name": "Fixture Wipe B",
+    "face_index": 0,
+    "local_path": "images/card-245-front.svg"
+  },
+  {
+    "name": "Fixture Wipe C",
+    "face_index": 0,
+    "local_path": "images/card-246-front.svg"
+  },
+  {
+    "name": "Fixture Wipe D",
+    "face_index": 0,
+    "local_path": "images/card-247-front.svg"
+  },
+  {
+    "name": "Fixture Wipe E",
+    "face_index": 0,
+    "local_path": "images/card-248-front.svg"
+  },
+  {
+    "name": "Fixture Wipe F",
+    "face_index": 0,
+    "local_path": "images/card-249-front.svg"
+  },
+  {
+    "name": "Fixture Wipe G",
+    "face_index": 0,
+    "local_path": "images/card-250-front.svg"
+  },
+  {
+    "name": "Fixture Wipe H",
+    "face_index": 0,
+    "local_path": "images/card-251-front.svg"
+  },
+  {
+    "name": "Fixture Wipe I",
+    "face_index": 0,
+    "local_path": "images/card-252-front.svg"
+  },
+  {
+    "name": "Fixture Wipe J",
+    "face_index": 0,
+    "local_path": "images/card-253-front.svg"
+  },
+  {
+    "name": "Fixture Wipe K",
+    "face_index": 0,
+    "local_path": "images/card-254-front.svg"
+  },
+  {
+    "name": "Fixture Wipe L",
+    "face_index": 0,
+    "local_path": "images/card-255-front.svg"
+  },
+  {
+    "name": "Fixture Wipe M",
+    "face_index": 0,
+    "local_path": "images/card-256-front.svg"
+  },
+  {
+    "name": "Fixture Wipe N",
+    "face_index": 0,
+    "local_path": "images/card-257-front.svg"
+  },
+  {
+    "name": "Fixture Wipe O",
+    "face_index": 0,
+    "local_path": "images/card-258-front.svg"
+  },
+  {
+    "name": "Fixture Threat A",
+    "face_index": 0,
+    "local_path": "images/card-259-front.svg"
+  },
+  {
+    "name": "Fixture Threat B",
+    "face_index": 0,
+    "local_path": "images/card-260-front.svg"
+  },
+  {
+    "name": "Fixture Threat C",
+    "face_index": 0,
+    "local_path": "images/card-261-front.svg"
+  },
+  {
+    "name": "Fixture Threat D",
+    "face_index": 0,
+    "local_path": "images/card-262-front.svg"
+  },
+  {
+    "name": "Fixture Threat E",
+    "face_index": 0,
+    "local_path": "images/card-263-front.svg"
+  },
+  {
+    "name": "Fixture Threat F",
+    "face_index": 0,
+    "local_path": "images/card-264-front.svg"
+  },
+  {
+    "name": "Fixture Threat G",
+    "face_index": 0,
+    "local_path": "images/card-265-front.svg"
+  },
+  {
+    "name": "Fixture Threat H",
+    "face_index": 0,
+    "local_path": "images/card-266-front.svg"
+  },
+  {
+    "name": "Fixture Threat I",
+    "face_index": 0,
+    "local_path": "images/card-267-front.svg"
+  },
+  {
+    "name": "Fixture Threat J",
+    "face_index": 0,
+    "local_path": "images/card-268-front.svg"
+  },
+  {
+    "name": "Fixture Threat K",
+    "face_index": 0,
+    "local_path": "images/card-269-front.svg"
+  },
+  {
+    "name": "Fixture Threat L",
+    "face_index": 0,
+    "local_path": "images/card-270-front.svg"
+  },
+  {
+    "name": "Fixture Threat M",
+    "face_index": 0,
+    "local_path": "images/card-271-front.svg"
+  },
+  {
+    "name": "Fixture Threat N",
+    "face_index": 0,
+    "local_path": "images/card-272-front.svg"
+  },
+  {
+    "name": "Fixture Threat O",
+    "face_index": 0,
+    "local_path": "images/card-273-front.svg"
+  },
+  {
+    "name": "Fixture Utility A",
+    "face_index": 0,
+    "local_path": "images/card-274-front.svg"
+  },
+  {
+    "name": "Fixture Utility B",
+    "face_index": 0,
+    "local_path": "images/card-275-front.svg"
+  },
+  {
+    "name": "Fixture Utility C",
+    "face_index": 0,
+    "local_path": "images/card-276-front.svg"
+  },
+  {
+    "name": "Fixture Utility D",
+    "face_index": 0,
+    "local_path": "images/card-277-front.svg"
+  },
+  {
+    "name": "Fixture Utility E",
+    "face_index": 0,
+    "local_path": "images/card-278-front.svg"
+  },
+  {
+    "name": "Fixture Utility F",
+    "face_index": 0,
+    "local_path": "images/card-279-front.svg"
+  },
+  {
+    "name": "Fixture Utility G",
+    "face_index": 0,
+    "local_path": "images/card-280-front.svg"
+  },
+  {
+    "name": "Fixture Utility H",
+    "face_index": 0,
+    "local_path": "images/card-281-front.svg"
+  },
+  {
+    "name": "Fixture Utility I",
+    "face_index": 0,
+    "local_path": "images/card-282-front.svg"
+  },
+  {
+    "name": "Fixture Utility J",
+    "face_index": 0,
+    "local_path": "images/card-283-front.svg"
+  },
+  {
+    "name": "Fixture Utility K",
+    "face_index": 0,
+    "local_path": "images/card-284-front.svg"
+  },
+  {
+    "name": "Fixture Utility L",
+    "face_index": 0,
+    "local_path": "images/card-285-front.svg"
+  },
+  {
+    "name": "Fixture Utility M",
+    "face_index": 0,
+    "local_path": "images/card-286-front.svg"
+  },
+  {
+    "name": "Fixture Utility N",
+    "face_index": 0,
+    "local_path": "images/card-287-front.svg"
+  },
+  {
+    "name": "Fixture Utility O",
+    "face_index": 0,
+    "local_path": "images/card-288-front.svg"
+  },
+  {
+    "name": "Plains",
+    "face_index": 0,
+    "local_path": "images/plains-front.svg"
+  },
+  {
+    "name": "Mountain",
+    "face_index": 0,
+    "local_path": "images/mountain-front.svg"
+  }
+]

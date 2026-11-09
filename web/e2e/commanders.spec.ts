@@ -5,16 +5,16 @@ test.describe("Commanders", () => {
   test("gallery of owned commanders with color filter and sorting", async ({ page }, info) => {
     desktopOnly(info);
     await page.goto("/commanders");
-    await expect(page.getByText("27 commanders")).toBeVisible();
+    await expect(page.getByText("16 commanders")).toBeVisible();
     const builds = page.getByRole("link", { name: /^Build with / });
     await expect(builds.first()).toHaveAccessibleName("Build with Syr Konrad, the Grim");
 
     await page
       .getByRole("group", { name: "Commander colors" })
-      .getByRole("button", { name: "Red" })
+      .getByRole("button", { name: "Blue" })
       .click();
-    await expect(page).toHaveURL(/c=R/);
-    await expect(page.getByText("3 commanders")).toBeVisible(); // mono-red: Drakuseth, Kazuul, Verix
+    await expect(page).toHaveURL(/c=U/);
+    await expect(page.getByText("1 commander")).toBeVisible(); // mono-blue: Tekuthal
     await page.locator("label", { hasText: /^Support$/ }).click();
     await expect(page).toHaveURL(/sort=support/);
   });
@@ -37,7 +37,7 @@ test.describe("Commanders", () => {
     test(`screenshot (${scheme})`, async ({ page }, info) => {
       await setScheme(page, scheme);
       await page.goto("/commanders");
-      await expect(page.getByText("27 commanders")).toBeVisible();
+      await expect(page.getByText("16 commanders")).toBeVisible();
       await shot(page, info, "commanders", scheme);
     });
   }

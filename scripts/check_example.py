@@ -24,7 +24,7 @@ paths in those arguments (e.g. ``-c my_collection.txt``) are resolved from the
 directory you run this script in. Exit code 0 = identical.
 
 Notes:
-- The collection defaults to commanderai-sample/expanded-collection.txt (the
+- The collection defaults to data/collezione-fittizia.csv (the
   bundled offline sample). Pass ``-c`` in the build arguments if your example
   used another collection.
 - Builds with ``--variety`` but no ``--seed`` are random and cannot be
@@ -118,8 +118,8 @@ def main() -> int:
         env = dict(os.environ)
         env.update({
             "PYTHONPATH": str(ROOT / "src"),
-            "COMMANDERAI_CACHE": str(ROOT / "offline-data"),
-            "COMMANDERAI_COLLECTION": str(ROOT / "commanderai-sample" / "expanded-collection.txt"),
+            "COMMANDERAI_CACHE": str(ROOT / "data/demo-catalog"),
+            "COMMANDERAI_COLLECTION": str(ROOT / "data" / "collezione-fittizia.csv"),
             "COMMANDERAI_DECKS_DIR": "decks",
             "COMMANDERAI_DB": "scratch.db",
             "ANTHROPIC_API_KEY": "",

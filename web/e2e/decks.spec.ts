@@ -29,12 +29,12 @@ test.describe("Decks", () => {
     atarkaName = `E2E Atarka dragons${suffix}`;
     atarka = await saveDeck(
       request,
-      { commander: "Atarka, World Render", theme: "dragons" },
+      { commander: "Fixture Dragon Commander", theme: "dragons" },
       atarkaName,
     );
     emmara = await saveDeck(
       request,
-      { commander: "Emmara, Soul of the Accord", budget: 80 },
+      { commander: "Fixture Token Commander", budget: 80 },
       `E2E Emmara budget${suffix}`,
     );
   });
@@ -90,7 +90,7 @@ test.describe("Decks", () => {
     await page.getByRole("link", { name: "Rebuild with these settings" }).click();
     await expect(page).toHaveURL(/\/build\?.*run=1/);
     await expect(
-      page.getByRole("heading", { name: "Atarka, World Render", level: 2 }),
+      page.getByRole("heading", { name: "Fixture Dragon Commander", level: 2 }),
     ).toBeVisible();
     await expect(page.getByText("Theme: dragon")).toBeVisible();
   });

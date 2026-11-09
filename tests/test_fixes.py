@@ -27,20 +27,16 @@ from commanderai.services.context import ServiceContext
 from commanderai.settings import Settings
 
 ROOT = Path(__file__).resolve().parent.parent
-OFFLINE = ROOT / "offline-data"
-SAMPLE = ROOT / "commanderai-sample"
+OFFLINE = ROOT / "tests/fixtures/integration/catalog"
+SAMPLE = ROOT / "tests/fixtures/integration/collections"
 PRECONS = SAMPLE / "precons"
-
-needs_catalog = pytest.mark.skipif(
-    not (OFFLINE / "oracle_cards.json").exists(), reason="offline catalog not available"
-)
-
 
 @pytest.fixture
 def settings(tmp_path) -> Settings:
     return Settings(
         decks_dir=tmp_path / "decks", default_collection=SAMPLE / "expanded-collection.txt",
         cache_dir=OFFLINE, db_path=tmp_path / "lib.db",
+        offline=True,
     )
 
 
@@ -59,13 +55,12 @@ def card(name, text="", price=None, type_line="Instant", colors=("U",), rank=Non
 # D1 — validate counts quantities, checks commander / partner
 # ---------------------------------------------------------------------------
 
-@needs_catalog
 @pytest.mark.parametrize("precon, commander", [
-    ("first-flight", "Isperia, Supreme Judge"),
-    ("grave-danger", "Gisa and Geralf"),
-    ("chaos-incarnate", "Kardur, Doomscourge"),
-    ("draconic-destruction", "Atarka, World Render"),
-    ("token-triumph", "Emmara, Soul of the Accord"),
+    ("first-flight", "Fixture Flight Commander"),
+    ("grave-danger", "Fixture Zombie Commander"),
+    ("chaos-incarnate", "Fixture Chaos Commander"),
+    ("draconic-destruction", "Fixture Dragon Commander"),
+    ("token-triumph", "Fixture Token Commander"),
 ])
 def test_d1_every_precon_is_valid(settings, precon, commander):
     result = validate_deck_list(ctx_for(settings), PRECONS / f"{precon}.txt", commander)
@@ -73,36 +68,32 @@ def test_d1_every_precon_is_valid(settings, precon, commander):
     assert result.card_count == 100
 
 
-@needs_catalog
 def test_d1_quantities_and_singleton(settings):
-    ok = "1 Isperia, Supreme Judge\n1 Sol Ring\n98 Island\n"
-    assert validate_deck_list(ctx_for(settings), ok, "Isperia, Supreme Judge").errors == []
-    dup = "1 Isperia, Supreme Judge\n2 Sol Ring\n97 Island\n"
-    errors = validate_deck_list(ctx_for(settings), dup, "Isperia, Supreme Judge").errors
+    ok = "1 Fixture Flight Commander\n1 Sol Ring\n98 Island\n"
+    assert validate_deck_list(ctx_for(settings), ok, "Fixture Flight Commander").errors == []
+    dup = "1 Fixture Flight Commander\n2 Sol Ring\n97 Island\n"
+    errors = validate_deck_list(ctx_for(settings), dup, "Fixture Flight Commander").errors
     assert errors == ["Duplicate: Sol Ring appears 2 times"]
 
 
-@needs_catalog
 def test_d1_commander_need_not_be_listed(settings):
-    result = validate_deck_list(ctx_for(settings), "1 Sol Ring\n98 Island\n", "Isperia, Supreme Judge")
+    result = validate_deck_list(ctx_for(settings), "1 Sol Ring\n98 Island\n", "Fixture Flight Commander")
     assert result.errors == [] and result.card_count == 100
 
 
-@needs_catalog
 def test_d1_unknown_cards_reported(settings):
-    result = validate_deck_list(ctx_for(settings), "1 Sol Ring\n1 Not A Card\n", "Isperia, Supreme Judge")
+    result = validate_deck_list(ctx_for(settings), "1 Sol Ring\n1 Not A Card\n", "Fixture Flight Commander")
     assert result.unknown_cards == ["Not A Card"]
     assert result.card_count == 2
 
 
-@needs_catalog
 def test_d1_illegal_commander_and_partner(settings):
     errors = validate_deck_list(ctx_for(settings), "98 Island\n", "Sol Ring").errors
     assert "Sol Ring can't be a commander" in errors
     errors = validate_deck_list(
-        ctx_for(settings), "97 Island\n", "Isperia, Supreme Judge", "Gisa and Geralf"
+        ctx_for(settings), "97 Island\n", "Fixture Flight Commander", "Fixture Zombie Commander"
     ).errors
-    assert "Isperia, Supreme Judge and Gisa and Geralf can't be partners" in errors
+    assert "Fixture Flight Commander and Fixture Zombie Commander can't be partners" in errors
 
 
 def test_d1_partner_deck_counts_both_commanders(settings):
@@ -158,16 +149,14 @@ def test_d2_enforce_budget_counts_the_commander():
     assert swaps == 1 and new[0].card.name == "Cheap" and final == 9.0
 
 
-@needs_catalog
 def test_d2_build_budget_matches_deck_price(settings):
-    result = build_deck(ctx_for(settings), BuildRequest(commander="Atarka, World Render", budget=40))
+    result = build_deck(ctx_for(settings), BuildRequest(commander="Fixture Dragon Commander", budget=40))
     report = result.budget
     assert report.commanders_price == 0.39
     assert round(report.final_price, 2) == round(result.deck.total_price, 2)
     assert report.met and result.deck.total_price <= 40
 
 
-@needs_catalog
 def test_d2_commanders_over_budget_warn(settings):
     ctx = ctx_for(settings)
     with pytest.raises(InsufficientCardsError):
@@ -244,17 +233,15 @@ def test_d3_online_sends_partner_and_uses_api_result(respx_mock):
     assert [n for n, _ in result.excluded_cards] == ["GC1"]      # API decides, not local flags
 
 
-@needs_catalog
 def test_d3_build_reports_offline_bracket(settings):
     ctx = ctx_for(settings, offline=True)
     result = build_deck(ctx, BuildRequest(commander="Zaxara, the Exemplary", bracket=2))
     assert result.bracket.mode == "offline"
-    assert {c.name for c in result.bracket.excluded_cards} == {"Rhystic Study", "Mystical Tutor"}
-    assert not {p.card.name for p in result.deck.cards} & {"Rhystic Study", "Mystical Tutor"}
+    assert {c.name for c in result.bracket.excluded_cards} == {"Rhystic Study", "Mystical Tutor", "Crop Rotation"}
+    assert not {p.card.name for p in result.deck.cards} & {"Rhystic Study", "Mystical Tutor", "Crop Rotation"}
     assert any(n.code == "bracket.offline" for n in ctx.reporter.notices)
 
 
-@needs_catalog
 def test_d3_offline_mode_blocks_llm_even_with_key(settings):
     ctx = ctx_for(settings, offline=True, anthropic_api_key="sk-test")
     result = build_deck(ctx, BuildRequest(commander="Zaxara, the Exemplary", use_llm=True))
@@ -295,7 +282,6 @@ def test_d5_copy_tokens():
     assert tokens[0].created_by == ["C0", "C1"]
 
 
-@needs_catalog
 def test_d5_no_malformed_token_names_in_catalog():
     tokens = extract_tokens(load_cards(OFFLINE / "oracle_cards.json"))
     for t in tokens:

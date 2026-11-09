@@ -39,7 +39,7 @@ test.describe("Build", () => {
     await page.getByRole("tab", { name: /Tokens/ }).click();
     await expect(page.getByText("Food", { exact: true }).first()).toBeVisible();
     await page.getByRole("tab", { name: "Build log" }).click();
-    await expect(page.getByText("Matched 500 cards")).toBeVisible();
+    await expect(page.getByText("Matched 291 cards")).toBeVisible();
 
     await page.getByRole("tab", { name: "Cards" }).click();
     await page.getByRole("button", { name: "Rebuild" }).click();
@@ -56,10 +56,10 @@ test.describe("Build", () => {
 
   test("re-roll gives a different, reproducible seed", async ({ page }, info) => {
     desktopOnly(info);
-    await page.goto("/build?commander=Kardur%2C+Doomscourge");
+    await page.goto("/build?commander=Fixture+Chaos+Commander");
     await page.getByRole("button", { name: "Build deck" }).click();
     await expect(
-      page.getByRole("heading", { name: "Kardur, Doomscourge", level: 2 }),
+      page.getByRole("heading", { name: "Fixture Chaos Commander", level: 2 }),
     ).toBeVisible();
     await page.getByRole("button", { name: "Re-roll" }).click();
     const seedBadge = page.getByText(/^Seed \d+$/);
@@ -113,10 +113,10 @@ test.describe("Build", () => {
   test("links with run=1 build immediately", async ({ page }, info) => {
     desktopOnly(info);
     await page.goto(
-      "/build?collection=builtin%3Aexpanded&commander=Atarka%2C+World+Render&seed=3&run=1",
+      "/build?collection=builtin%3Aexpanded&commander=Fixture+Dragon+Commander&seed=3&run=1",
     );
     await expect(
-      page.getByRole("heading", { name: "Atarka, World Render", level: 2 }),
+      page.getByRole("heading", { name: "Fixture Dragon Commander", level: 2 }),
     ).toBeVisible();
     await expect(page.getByText("Seed 3")).toBeVisible();
   });

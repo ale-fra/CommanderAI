@@ -26,8 +26,9 @@ contains 194 distinct card names; card images are not bundled, so placeholders a
 shown until a local image manifest and its files are configured. Upload your own
 collection from the Collection page.
 
-Run `scripts/test.sh` for Python tests, lint, UI tests/build and the API smoke test.
-See [docs/TESTING.md](docs/TESTING.md) for optional full-catalog and browser checks.
+Run `scripts/test.sh` for Python tests, lint, differential CLI checks, UI tests/build and the API smoke test.
+All standard test data is bundled under `tests/fixtures/integration/`; no API key or external catalog is needed.
+See [docs/TESTING.md](docs/TESTING.md) for optional browser and historical snapshot checks.
 
 ## What it does
 

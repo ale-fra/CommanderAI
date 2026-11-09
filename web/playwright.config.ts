@@ -29,13 +29,14 @@ export default defineConfig({
   ],
   webServer: {
     // Fresh database and decks folder on every run → deterministic tests.
-    command: `rm -rf ${ROOT}web/test-results/e2e-data && mkdir -p ${ROOT}web/test-results/e2e-data && ${ROOT}.venv/bin/commanderai serve --port ${PORT}`,
+    command: `rm -rf ${ROOT}web/test-results/e2e-data && mkdir -p ${ROOT}web/test-results/e2e-data && ${ROOT}.venv/bin/python ${ROOT}scripts/serve_test_app.py --port ${PORT}`,
     url: `http://127.0.0.1:${PORT}/api/status`,
     reuseExistingServer: false,
     timeout: 60_000,
     env: {
-      COMMANDERAI_CACHE: `${ROOT}offline-data`,
-      COMMANDERAI_COLLECTION: `${ROOT}commanderai-sample/expanded-collection.txt`,
+      PYTHONPATH: `${ROOT}src`,
+      COMMANDERAI_CACHE: `${ROOT}tests/fixtures/integration/catalog`,
+      COMMANDERAI_COLLECTION: `${ROOT}tests/fixtures/integration/collections/expanded-collection.txt`,
       COMMANDERAI_DECKS_DIR: `${ROOT}web/test-results/e2e-data/decks`,
       COMMANDERAI_DB: `${ROOT}web/test-results/e2e-data/e2e.db`,
       COMMANDERAI_OFFLINE: "1",
